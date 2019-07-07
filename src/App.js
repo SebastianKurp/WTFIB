@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Helmet } from "react-helmet"
-import ReactMapGL, { Marker } from "react-map-gl"
+import ReactMapGL, { Marker, Popup } from "react-map-gl"
 import styled from "@emotion/styled"
 import "./App.css"
 
@@ -8,31 +8,90 @@ const Tokyo = {
   coords: [35.68536, 139.753372]
 }
 
-const MapMarkerOuterCircle = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
-  background-color: #dd4b39;
-  padding: 0;
-  cursor: pointer;
-  border: none;
-  z-index: 0;
-`
+const HomeMarker = () => {
+  const HomeMarkerOuterCircle = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #2484c6;
+    padding: 0;
+    cursor: pointer;
+    border: none;
+    z-index: 0;
+  `
 
-const MapMarkerInnerCircle = styled.div`
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background-color: #2a2a2a;
-`
+  const HomeMarkerInnerCircle = styled.div`
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+  `
 
-const MapMarker = ({ latitude, longitude, onClick }) => {
+  const Popover = styled.div`
+    display: flex;
+    flex-direction: column;
+  `
+
+  const PopoverTitle = styled.span``
+
+  const [popUpVisible, setPopUpVisible] = useState(false)
+
+  const homeLatitude = 41.881832
+  const homeLongitude = -87.623177
   return (
-    <Marker latitude={latitude} longitude={longitude}>
-      <MapMarkerOuterCircle
+    <>
+      {popUpVisible && (
+        <Popup
+          latitude={homeLatitude}
+          longitude={homeLongitude}
+          offsetLeft={-10}
+          offsetTop={10}
+          closeButton={true}
+          closeOnClick={false}
+          onClose={() => setPopUpVisible(false)}
+          anchor="top">
+          <Popover>
+            <PopoverTitle>Home(Chicago)</PopoverTitle>
+          </Popover>
+        </Popup>
+      )}
+      <Marker latitude={homeLatitude} longitude={homeLongitude} offsetLeft={-20} offsetTop={-10}>
+        <HomeMarkerOuterCircle onClick={() => setPopUpVisible(true)}>
+          <HomeMarkerInnerCircle />
+        </HomeMarkerOuterCircle>
+      </Marker>
+    </>
+  )
+}
+
+const GlobalMapMarker = ({ latitude, longitude, onClick }) => {
+  const GlobalMapMarkerOuterCircle = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #dd4b39;
+    padding: 0;
+    cursor: pointer;
+    border: none;
+    z-index: 0;
+  `
+
+  const GlobalMapMarkerInnerCircle = styled.div`
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+  `
+
+  return (
+    <Marker latitude={latitude} longitude={longitude} offsetLeft={-20} offsetTop={-10}>
+      <GlobalMapMarkerOuterCircle
         onClick={() =>
           onClick({
             width: window.innerWidth,
@@ -42,8 +101,8 @@ const MapMarker = ({ latitude, longitude, onClick }) => {
             longitude
           })
         }>
-        <MapMarkerInnerCircle />
-      </MapMarkerOuterCircle>
+        <GlobalMapMarkerInnerCircle />
+      </GlobalMapMarkerOuterCircle>
     </Marker>
   )
 }
@@ -68,7 +127,12 @@ function App() {
         mapStyle={"mapbox://styles/sebastiankurp/cjxsbmb5f79rd1cp6511l5aii"}
         mapboxApiAccessToken="pk.eyJ1Ijoic2ViYXN0aWFua3VycCIsImEiOiJjandwZWZ1emkxOHR1NDhwOG1lM2pmeHVmIn0.fHuAftP7b6uRy1UfWieSPQ"
         onViewportChange={viewport => setViewport(viewport)}>
-        <MapMarker latitude={Tokyo.coords[0]} longitude={Tokyo.coords[1]} onClick={setViewport} />
+        <HomeMarker />
+        <GlobalMapMarker
+          latitude={Tokyo.coords[0]}
+          longitude={Tokyo.coords[1]}
+          onClick={setViewport}
+        />
       </ReactMapGL>
     </div>
   )
