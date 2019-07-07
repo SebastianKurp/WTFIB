@@ -4,8 +4,6 @@ import ReactMapGL, { Marker, Popup } from "react-map-gl"
 import styled from "@emotion/styled"
 import "./App.css"
 
-const dotenv = require("dotenv").config()
-
 const mapboxKey = process.env.REACT_APP_MAPBOX_KEY
 
 const Tokyo = {
@@ -129,9 +127,7 @@ function App() {
       <ReactMapGL
         {...viewport}
         mapStyle={"mapbox://styles/sebastiankurp/cjxsbmb5f79rd1cp6511l5aii"}
-        mapboxApiAccessToken={
-          process.env.NODE_ENV === "production" ? process.env.MAPBOX_KEY : mapboxKey
-        }
+        mapboxApiAccessToken={mapboxKey}
         onViewportChange={viewport => setViewport(viewport)}>
         <HomeMarker />
         <GlobalMapMarker
