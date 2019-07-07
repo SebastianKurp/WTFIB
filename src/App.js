@@ -4,6 +4,8 @@ import ReactMapGL, { Marker, Popup } from "react-map-gl"
 import styled from "@emotion/styled"
 import "./App.css"
 
+const mapboxKey = process.env.REACT_APP_MAPBOX_KEY
+
 const Tokyo = {
   coords: [35.68536, 139.753372]
 }
@@ -96,7 +98,7 @@ const GlobalMapMarker = ({ latitude, longitude, onClick }) => {
           onClick({
             width: window.innerWidth,
             height: window.innerHeight,
-            zoom: 10,
+            zoom: 11,
             latitude,
             longitude
           })
@@ -125,7 +127,9 @@ function App() {
       <ReactMapGL
         {...viewport}
         mapStyle={"mapbox://styles/sebastiankurp/cjxsbmb5f79rd1cp6511l5aii"}
-        mapboxApiAccessToken="pk.eyJ1Ijoic2ViYXN0aWFua3VycCIsImEiOiJjandwZWZ1emkxOHR1NDhwOG1lM2pmeHVmIn0.fHuAftP7b6uRy1UfWieSPQ"
+        mapboxApiAccessToken={
+          process.env.NODE_ENV === "production" ? process.env.MAPBOX_KEY : mapboxKey
+        }
         onViewportChange={viewport => setViewport(viewport)}>
         <HomeMarker />
         <GlobalMapMarker
