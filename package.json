@@ -31,5 +31,19 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint-plugin-prettier": "^3.1.0",
+    "prettier": "1.18.2"
+  },
+  "prettier": {
+    "bracketSpacing": true,
+    "singleQuote": false,
+    "semi": false,
+    "useTabs": false,
+    "printWidth": 100,
+    "arrowParens": "avoid",
+    "trailingComma": "none",
+    "jsxBracketSameLine": true
   }
 }
