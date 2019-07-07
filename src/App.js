@@ -4,6 +4,8 @@ import ReactMapGL, { Marker, Popup } from "react-map-gl"
 import styled from "@emotion/styled"
 import "./App.css"
 
+const dotenv = require("dotenv").config()
+
 const mapboxKey = process.env.REACT_APP_MAPBOX_KEY
 
 const Tokyo = {
