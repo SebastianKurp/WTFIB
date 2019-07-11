@@ -51,8 +51,8 @@ const HomeMarker = () => {
           longitude={homeLongitude}
           offsetLeft={-10}
           offsetTop={10}
-          closeButton={true}
-          closeOnClick={false}
+          closeButton={false}
+          closeOnClick={true}
           onClose={() => setPopUpVisible(false)}
           anchor="top">
           <Popover>
@@ -61,7 +61,9 @@ const HomeMarker = () => {
         </Popup>
       )}
       <Marker latitude={homeLatitude} longitude={homeLongitude} offsetLeft={-20} offsetTop={-10}>
-        <HomeMarkerOuterCircle onClick={() => setPopUpVisible(true)}>
+        <HomeMarkerOuterCircle
+          onMouseOver={() => setPopUpVisible(true)}
+          onMouseLeave={() => setPopUpVisible(false)}>
           <HomeMarkerInnerCircle />
         </HomeMarkerOuterCircle>
       </Marker>
@@ -69,7 +71,7 @@ const HomeMarker = () => {
   )
 }
 
-const GlobalMapMarker = ({ latitude, longitude, onClick }) => {
+const GlobalMapMarker = ({ zoom, latitude, longitude, country, visited, onClick }) => {
   const GlobalMapMarkerOuterCircle = styled.button`
     display: flex;
     align-items: center;
@@ -91,22 +93,54 @@ const GlobalMapMarker = ({ latitude, longitude, onClick }) => {
     background-color: #2a2a2a;
   `
 
-  return (
-    <Marker latitude={latitude} longitude={longitude} offsetLeft={-20} offsetTop={-10}>
-      <GlobalMapMarkerOuterCircle
-        onClick={() =>
-          onClick({
-            width: window.innerWidth,
-            height: window.innerHeight,
-            zoom: 11,
-            latitude,
-            longitude
-          })
-        }>
-        <GlobalMapMarkerInnerCircle />
-      </GlobalMapMarkerOuterCircle>
-    </Marker>
-  )
+  const Popover = styled.div`
+    display: flex;
+    flex-direction: column;
+  `
+
+  const PopoverInfo = styled.span``
+  const [popUpVisible, setPopUpVisible] = useState(false)
+  if (zoom < 3) {
+    return (
+      <>
+        {popUpVisible && (
+          <Popup
+            latitude={latitude}
+            longitude={longitude}
+            offsetLeft={-10}
+            offsetTop={10}
+            closeButton={false}
+            closeOnClick={true}
+            onClose={() => setPopUpVisible(false)}
+            anchor="top">
+            <Popover>
+              <PopoverInfo>
+                {country}, {visited}
+              </PopoverInfo>
+            </Popover>
+          </Popup>
+        )}
+        <Marker latitude={latitude} longitude={longitude} offsetLeft={-20} offsetTop={-10}>
+          <GlobalMapMarkerOuterCircle
+            onMouseOver={() => setPopUpVisible(true)}
+            onMouseLeave={() => setPopUpVisible(false)}
+            onClick={() =>
+              onClick({
+                width: window.innerWidth,
+                height: window.innerHeight,
+                zoom: 4,
+                latitude,
+                longitude
+              })
+            }>
+            <GlobalMapMarkerInnerCircle />
+          </GlobalMapMarkerOuterCircle>
+        </Marker>
+      </>
+    )
+  } else {
+    return null
+  }
 }
 function App() {
   const [viewport, setViewport] = useState({
@@ -131,9 +165,12 @@ function App() {
         onViewportChange={viewport => setViewport(viewport)}>
         <HomeMarker />
         <GlobalMapMarker
+          zoom={viewport.zoom}
           latitude={Tokyo.coords[0]}
           longitude={Tokyo.coords[1]}
           onClick={setViewport}
+          country={"Japan"}
+          visited={"Summer 2019"}
         />
       </ReactMapGL>
     </div>
