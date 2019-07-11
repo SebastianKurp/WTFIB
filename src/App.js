@@ -6,9 +6,15 @@ import "./App.css"
 
 const mapboxKey = process.env.REACT_APP_MAPBOX_KEY
 
-const Tokyo = {
-  coords: [35.68536, 139.753372]
-}
+const CountryMarkers = [
+  {
+    country: "Tokyo",
+    visited: "Summer 2019",
+    latitude: 35.68536,
+    longitude: 139.753372
+  }
+]
+
 //zoom, latitude, longitude, city
 const JapanTrip = [
   {
@@ -17,6 +23,7 @@ const JapanTrip = [
     city: "Tokyo"
   },
   {
+    zoom: 10,
     latitude: 35.3606,
     longitude: 138.7274,
     city: "Fujisan"
@@ -99,8 +106,8 @@ const HomeMarker = () => {
   )
 }
 
-const GlobalMapMarker = ({ zoom, latitude, longitude, country, visited, onClick }) => {
-  const GlobalMapMarkerOuterCircle = styled.button`
+const CountryMapMarker = ({ zoom, latitude, longitude, country, visited, onClick }) => {
+  const CountryMapMarkerOuterCircle = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -114,7 +121,7 @@ const GlobalMapMarker = ({ zoom, latitude, longitude, country, visited, onClick 
     z-index: 0;
   `
 
-  const GlobalMapMarkerInnerCircle = styled.div`
+  const CountryMapMarkerInnerCircle = styled.div`
     width: 10px;
     height: 10px;
     border-radius: 5px;
@@ -150,7 +157,7 @@ const GlobalMapMarker = ({ zoom, latitude, longitude, country, visited, onClick 
           </Popup>
         )}
         <Marker latitude={latitude} longitude={longitude} offsetLeft={-20} offsetTop={-10}>
-          <GlobalMapMarkerOuterCircle
+          <CountryMapMarkerOuterCircle
             onMouseOver={() => setPopUpVisible(true)}
             onMouseLeave={() => setPopUpVisible(false)}
             onClick={() =>
@@ -162,8 +169,8 @@ const GlobalMapMarker = ({ zoom, latitude, longitude, country, visited, onClick 
                 longitude
               })
             }>
-            <GlobalMapMarkerInnerCircle />
-          </GlobalMapMarkerOuterCircle>
+            <CountryMapMarkerInnerCircle />
+          </CountryMapMarkerOuterCircle>
         </Marker>
       </>
     )
@@ -172,7 +179,7 @@ const GlobalMapMarker = ({ zoom, latitude, longitude, country, visited, onClick 
   }
 }
 
-const CityMarkers = ({ zoom, latitude, longitude, city, onClick }) => {
+const CityMarkers = ({ zoom, latitude, longitude, city, onClick, setZoom }) => {
   const CityMarkersOuterCircle = styled.button`
     display: flex;
     align-items: center;
@@ -227,7 +234,7 @@ const CityMarkers = ({ zoom, latitude, longitude, city, onClick }) => {
               onClick({
                 width: window.innerWidth,
                 height: window.innerHeight,
-                zoom: 11,
+                zoom: setZoom,
                 latitude,
                 longitude
               })
@@ -264,14 +271,18 @@ function App() {
         mapboxApiAccessToken={mapboxKey}
         onViewportChange={viewport => setViewport(viewport)}>
         <HomeMarker />
-        <GlobalMapMarker
-          zoom={viewport.zoom}
-          latitude={Tokyo.coords[0]}
-          longitude={Tokyo.coords[1]}
-          onClick={setViewport}
-          country={"Japan"}
-          visited={"Summer 2019"}
-        />
+        {CountryMarkers.map(countryMarker => {
+          return (
+            <CountryMapMarker
+              zoom={viewport.zoom}
+              latitude={countryMarker.latitude}
+              longitude={countryMarker.longitude}
+              country={countryMarker.country}
+              visited={countryMarker.visited}
+              onClick={setViewport}
+            />
+          )
+        })}
         {JapanTrip.map(cityMarker => {
           return (
             <CityMarkers
@@ -279,7 +290,8 @@ function App() {
               latitude={cityMarker.latitude}
               longitude={cityMarker.longitude}
               city={cityMarker.city}
-              onClick={() => console.log("temp")}
+              onClick={setViewport}
+              setZoom={cityMarker.zoom != null ? cityMarker.zoom : 11}
             />
           )
         })}
