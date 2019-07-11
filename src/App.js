@@ -9,6 +9,34 @@ const mapboxKey = process.env.REACT_APP_MAPBOX_KEY
 const Tokyo = {
   coords: [35.68536, 139.753372]
 }
+//zoom, latitude, longitude, city
+const JapanTrip = [
+  {
+    latitude: 35.68536,
+    longitude: 139.753372,
+    city: "Tokyo"
+  },
+  {
+    latitude: 35.3606,
+    longitude: 138.7274,
+    city: "Fujisan"
+  },
+  {
+    latitude: 34.6937,
+    longitude: 135.5023,
+    city: "Osaka"
+  },
+  {
+    latitude: 34.3853,
+    longitude: 132.4553,
+    city: "Hiroshima"
+  },
+  {
+    latitude: 35.0116,
+    longitude: 135.7681,
+    city: "Kyoto"
+  }
+]
 
 const HomeMarker = () => {
   const HomeMarkerOuterCircle = styled.button`
@@ -100,6 +128,7 @@ const GlobalMapMarker = ({ zoom, latitude, longitude, country, visited, onClick 
 
   const PopoverInfo = styled.span``
   const [popUpVisible, setPopUpVisible] = useState(false)
+  console.log(zoom)
   if (zoom < 3) {
     return (
       <>
@@ -142,6 +171,77 @@ const GlobalMapMarker = ({ zoom, latitude, longitude, country, visited, onClick 
     return null
   }
 }
+
+const CityMarkers = ({ zoom, latitude, longitude, city, onClick }) => {
+  const CityMarkersOuterCircle = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #ffd23f;
+    padding: 0;
+    cursor: pointer;
+    border: none;
+    z-index: 0;
+  `
+
+  const CityMarkersInnerCircle = styled.div`
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+  `
+
+  const Popover = styled.div`
+    display: flex;
+    flex-direction: column;
+  `
+
+  const PopoverInfo = styled.span``
+  const [popUpVisible, setPopUpVisible] = useState(false)
+  if (zoom > 3 && zoom <= 11) {
+    return (
+      <>
+        {popUpVisible && (
+          <Popup
+            latitude={latitude}
+            longitude={longitude}
+            offsetLeft={-10}
+            offsetTop={10}
+            closeButton={false}
+            closeOnClick={true}
+            onClose={() => setPopUpVisible(false)}
+            anchor="top">
+            <Popover>
+              <PopoverInfo>{city}</PopoverInfo>
+            </Popover>
+          </Popup>
+        )}
+        <Marker latitude={latitude} longitude={longitude} offsetLeft={-20} offsetTop={-10}>
+          <CityMarkersOuterCircle
+            onMouseOver={() => setPopUpVisible(true)}
+            onMouseLeave={() => setPopUpVisible(false)}
+            onClick={() =>
+              onClick({
+                width: window.innerWidth,
+                height: window.innerHeight,
+                zoom: 11,
+                latitude,
+                longitude
+              })
+            }>
+            <CityMarkersInnerCircle />
+          </CityMarkersOuterCircle>
+        </Marker>
+      </>
+    )
+  } else {
+    return null
+  }
+}
+
 function App() {
   const [viewport, setViewport] = useState({
     width: window.innerWidth,
@@ -151,7 +251,7 @@ function App() {
     zoom: 1,
     pitch: 0
   })
-
+  console.log("JapanTrip", JapanTrip)
   return (
     <div className="App">
       <Helmet>
@@ -172,6 +272,17 @@ function App() {
           country={"Japan"}
           visited={"Summer 2019"}
         />
+        {JapanTrip.map(cityMarker => {
+          return (
+            <CityMarkers
+              zoom={viewport.zoom}
+              latitude={cityMarker.latitude}
+              longitude={cityMarker.longitude}
+              city={cityMarker.city}
+              onClick={() => console.log("temp")}
+            />
+          )
+        })}
       </ReactMapGL>
     </div>
   )
