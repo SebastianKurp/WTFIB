@@ -1,10 +1,36 @@
 import React, { useState } from "react"
 import { Helmet } from "react-helmet"
 import ReactMapGL, { Marker, Popup } from "react-map-gl"
+import ReactModal from "react-modal"
+import Gallery from "react-grid-gallery"
 import styled from "@emotion/styled"
 import "./App.css"
 
 const mapboxKey = process.env.REACT_APP_MAPBOX_KEY
+
+const IMAGES = [
+  {
+    src: "https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_b.jpg",
+    thumbnail: "https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_n.jpg",
+    thumbnailWidth: 320,
+    thumbnailHeight: 174,
+    caption: "After Rain (Jeshu John - designerspics.com)"
+  },
+  {
+    src: "https://c2.staticflickr.com/9/8356/28897120681_3b2c0f43e0_b.jpg",
+    thumbnail: "https://c2.staticflickr.com/9/8356/28897120681_3b2c0f43e0_n.jpg",
+    thumbnailWidth: 320,
+    thumbnailHeight: 212,
+    caption: "Boats (Jeshu John - designerspics.com)"
+  },
+
+  {
+    src: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg",
+    thumbnail: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_n.jpg",
+    thumbnailWidth: 320,
+    thumbnailHeight: 212
+  }
+]
 
 const CountryMarkers = [
   {
@@ -309,7 +335,7 @@ const LandMarkMarker = ({ zoom, latitude, longitude, landmark, onClick }) => {
           <LandMarkMarkerOuterCircle
             onMouseOver={() => setPopUpVisible(true)}
             onMouseLeave={() => setPopUpVisible(false)}
-            onClick={() => onClick}>
+            onClick={() => onClick(true)}>
             <LandMarkMarkerInnerCircle />
           </LandMarkMarkerOuterCircle>
         </Marker>
@@ -324,11 +350,16 @@ function App() {
   const [viewport, setViewport] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
-    latitude: 0,
-    longitude: 0,
-    zoom: 1,
+    latitude: 35.662, //swap to 0 in prod
+    longitude: 139.7038, //swap to 0 in prod
+    zoom: 11,
     pitch: 0
   })
+
+  //35.662,
+  //     longitude: 139.7038,
+  //ModalVisiblity
+  const [visible, setVisible] = useState(true) //swap to false in prod
 
   return (
     <div className="App">
@@ -336,6 +367,24 @@ function App() {
         <meta charSet="utf-8" />
         <title>WTFIB</title>
       </Helmet>
+      <ReactModal
+        isOpen={visible}
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.4)"
+          },
+          content: {
+            color: "lightsteelblue"
+          }
+        }}>
+        <Gallery
+          images={IMAGES}
+          enableImageSelection={false}
+          showLightboxThumbnails={true}
+          backdropClosesModal={true}
+        />
+        ,
+      </ReactModal>
       <ReactMapGL
         {...viewport}
         mapStyle={"mapbox://styles/sebastiankurp/cjxsbmb5f79rd1cp6511l5aii"}
@@ -373,7 +422,7 @@ function App() {
               latitude={landmark.latitude}
               longitude={landmark.longitude}
               landmark={landmark.landmark}
-              onClick={console.log("meme")}
+              onClick={setVisible}
             />
           )
         })}
