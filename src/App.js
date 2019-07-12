@@ -45,6 +45,14 @@ const JapanTrip = [
   }
 ]
 
+const LandMarks = [
+  {
+    latitude: 35.662,
+    longitude: 139.7038,
+    landmark: "Shibuya"
+  }
+]
+
 const HomeMarker = () => {
   const HomeMarkerOuterCircle = styled.button`
     display: flex;
@@ -135,7 +143,7 @@ const CountryMapMarker = ({ zoom, latitude, longitude, country, visited, onClick
 
   const PopoverInfo = styled.span``
   const [popUpVisible, setPopUpVisible] = useState(false)
-  console.log(zoom)
+
   if (zoom < 3) {
     return (
       <>
@@ -179,8 +187,8 @@ const CountryMapMarker = ({ zoom, latitude, longitude, country, visited, onClick
   }
 }
 
-const CityMarkers = ({ zoom, latitude, longitude, city, onClick, setZoom }) => {
-  const CityMarkersOuterCircle = styled.button`
+const CityMarker = ({ zoom, latitude, longitude, city, onClick, setZoom }) => {
+  const CityMarkerOuterCircle = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -194,7 +202,7 @@ const CityMarkers = ({ zoom, latitude, longitude, city, onClick, setZoom }) => {
     z-index: 0;
   `
 
-  const CityMarkersInnerCircle = styled.div`
+  const CityMarkerInnerCircle = styled.div`
     width: 10px;
     height: 10px;
     border-radius: 5px;
@@ -208,7 +216,7 @@ const CityMarkers = ({ zoom, latitude, longitude, city, onClick, setZoom }) => {
 
   const PopoverInfo = styled.span``
   const [popUpVisible, setPopUpVisible] = useState(false)
-  if (zoom > 3 && zoom <= 11) {
+  if (zoom > 3 && zoom < 12) {
     return (
       <>
         {popUpVisible && (
@@ -227,7 +235,7 @@ const CityMarkers = ({ zoom, latitude, longitude, city, onClick, setZoom }) => {
           </Popup>
         )}
         <Marker latitude={latitude} longitude={longitude} offsetLeft={-20} offsetTop={-10}>
-          <CityMarkersOuterCircle
+          <CityMarkerOuterCircle
             onMouseOver={() => setPopUpVisible(true)}
             onMouseLeave={() => setPopUpVisible(false)}
             onClick={() =>
@@ -239,8 +247,71 @@ const CityMarkers = ({ zoom, latitude, longitude, city, onClick, setZoom }) => {
                 longitude
               })
             }>
-            <CityMarkersInnerCircle />
-          </CityMarkersOuterCircle>
+            <CityMarkerInnerCircle />
+          </CityMarkerOuterCircle>
+        </Marker>
+      </>
+    )
+  } else {
+    return null
+  }
+}
+
+const LandMarkMarker = ({ zoom, latitude, longitude, landmark, onClick }) => {
+  const LandMarkMarkerOuterCircle = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #3bceac;
+    padding: 0;
+    cursor: pointer;
+    border: none;
+    z-index: 0;
+  `
+
+  const LandMarkMarkerInnerCircle = styled.div`
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+  `
+
+  const Popover = styled.div`
+    display: flex;
+    flex-direction: column;
+  `
+
+  const PopoverInfo = styled.span``
+
+  const [popUpVisible, setPopUpVisible] = useState(false)
+  if (zoom > 10) {
+    return (
+      <>
+        {popUpVisible && (
+          <Popup
+            latitude={latitude}
+            longitude={longitude}
+            offsetLeft={10}
+            offsetTop={20}
+            closeButton={false}
+            closeOnClick={true}
+            onClose={() => setPopUpVisible(false)}
+            anchor="top">
+            <Popover>
+              <PopoverInfo>{landmark}</PopoverInfo>
+            </Popover>
+          </Popup>
+        )}
+        <Marker latitude={latitude} longitude={longitude} offsetLeft={0} offsetTop={0}>
+          <LandMarkMarkerOuterCircle
+            onMouseOver={() => setPopUpVisible(true)}
+            onMouseLeave={() => setPopUpVisible(false)}
+            onClick={() => onClick}>
+            <LandMarkMarkerInnerCircle />
+          </LandMarkMarkerOuterCircle>
         </Marker>
       </>
     )
@@ -258,7 +329,7 @@ function App() {
     zoom: 1,
     pitch: 0
   })
-  console.log("JapanTrip", JapanTrip)
+
   return (
     <div className="App">
       <Helmet>
@@ -285,13 +356,24 @@ function App() {
         })}
         {JapanTrip.map(cityMarker => {
           return (
-            <CityMarkers
+            <CityMarker
               zoom={viewport.zoom}
               latitude={cityMarker.latitude}
               longitude={cityMarker.longitude}
               city={cityMarker.city}
               onClick={setViewport}
               setZoom={cityMarker.zoom != null ? cityMarker.zoom : 11}
+            />
+          )
+        })}
+        {LandMarks.map(landmark => {
+          return (
+            <LandMarkMarker
+              zoom={viewport.zoom}
+              latitude={landmark.latitude}
+              longitude={landmark.longitude}
+              landmark={landmark.landmark}
+              onClick={console.log("meme")}
             />
           )
         })}
