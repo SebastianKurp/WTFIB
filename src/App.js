@@ -414,7 +414,7 @@ const LastViewButton = ({ zoom, latitude, longitude, onClick }) => {
       </LastViewButton>
     )
   }
-  if (zoom > 10) {
+  if (zoom > 9) {
     return (
       <LastViewButton
         onClick={() =>
@@ -480,14 +480,16 @@ function App() {
         />
         ,
       </ReactModal>
-      <ButtonContainer>
-        <LastViewButton
-          zoom={viewport.zoom}
-          onClick={setViewport}
-          latitude={viewport.latitude}
-          longitude={viewport.longitude}
-        />
-      </ButtonContainer>
+      {visible ? null : (
+        <ButtonContainer>
+          <LastViewButton
+            zoom={viewport.zoom}
+            onClick={setViewport}
+            latitude={viewport.latitude}
+            longitude={viewport.longitude}
+          />
+        </ButtonContainer>
+      )}
       <ReactMapGL
         {...viewport}
         mapStyle={"mapbox://styles/sebastiankurp/cjxsbmb5f79rd1cp6511l5aii"}
