@@ -435,12 +435,30 @@ const LastViewButton = ({ zoom, latitude, longitude, onClick }) => {
     return null
   }
 }
+
 function App() {
   const ButtonContainer = styled.div`
     position: absolute;
     top: 10px;
     right: 10px;
     z-index: 100;
+  `
+
+  const DrawerButton = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    z-index: 100;
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
   `
 
   const [viewport, setViewport] = useState({
@@ -454,8 +472,10 @@ function App() {
 
   //35.662,
   //     longitude: 139.7038,
+
   //ModalVisiblity
-  const [visible, setVisible] = useState(false) //swap to false in prod
+  const [visible, setVisible] = useState(false)
+  const [drawer, showDrawer] = useState(false)
 
   useEffect(() => {
     document.addEventListener("touchstart", function() {}, true)
@@ -471,7 +491,12 @@ function App() {
         <meta charSet="utf-8" />
         <title>WTFIB</title>
       </Helmet>
-      <Menu isOpen={false} pageWrapId={"page-wrap"} outerContainerId={"outer-container"}>
+      {drawer ? null : (
+        <DrawerButton onClick={() => showDrawer(!drawer)}>
+          <img src="https://img.icons8.com/material-sharp/24/000000/menu.png" />
+        </DrawerButton>
+      )}
+      <Menu isOpen={drawer} pageWrapId={"page-wrap"} outerContainerId={"outer-container"}>
         <span>TEST</span>
         <span>TEST</span>
         <span>TEST</span>
@@ -488,6 +513,12 @@ function App() {
         <span>TEST</span>
         <span>TEST</span>
         <span>TEST</span>
+        <button
+          onClick={() => {
+            showDrawer(false)
+          }}>
+          test button
+        </button>
       </Menu>
       <main id="page-wrap">
         <ReactModal
