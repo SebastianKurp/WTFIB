@@ -398,7 +398,7 @@ const LastViewButton = ({ zoom, latitude, longitude, onClick }) => {
     }
   `
 
-  if (zoom > 3 && zoom < 10) {
+  if (zoom > 3 && zoom < 7) {
     return (
       <LastViewButton
         onClick={() =>
@@ -415,7 +415,7 @@ const LastViewButton = ({ zoom, latitude, longitude, onClick }) => {
       </LastViewButton>
     )
   }
-  if (zoom > 9) {
+  if (zoom > 7) {
     return (
       <LastViewButton
         onClick={() =>
