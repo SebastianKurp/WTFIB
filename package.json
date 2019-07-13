@@ -6,6 +6,7 @@
     "@emotion/core": "^10.0.14",
     "@emotion/styled": "^10.0.14",
     "react": "^16.8.6",
+    "react-burger-menu": "^2.6.10",
     "react-dom": "^16.8.6",
     "react-grid-gallery": "^0.5.5",
     "react-helmet": "^5.2.1",

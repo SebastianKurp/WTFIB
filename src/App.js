@@ -1,8 +1,9 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Helmet } from "react-helmet"
 import ReactMapGL, { Marker, Popup } from "react-map-gl"
 import ReactModal from "react-modal"
 import Gallery from "react-grid-gallery"
+import { scaleDown as Menu } from "react-burger-menu"
 import styled from "@emotion/styled"
 import "./App.css"
 
@@ -456,82 +457,110 @@ function App() {
   //ModalVisiblity
   const [visible, setVisible] = useState(false) //swap to false in prod
 
+  useEffect(() => {
+    document.addEventListener("touchstart", function() {}, true)
+    // window.addEventListener(
+    //   "resize",
+    //   setViewport({ ...viewport, height: window.innerHeight, width: window.innerWidth })
+    // )
+  })
+
   return (
-    <div className="App">
+    <div className="App" id="outer-container">
       <Helmet>
         <meta charSet="utf-8" />
         <title>WTFIB</title>
       </Helmet>
-      <ReactModal
-        isOpen={visible}
-        style={{
-          overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.4)"
-          },
-          content: {
-            color: "lightsteelblue"
-          }
-        }}>
-        <Gallery
-          images={IMAGES}
-          enableImageSelection={false}
-          showLightboxThumbnails={true}
-          backdropClosesModal={true}
-        />
-        ,
-      </ReactModal>
-      {visible ? null : (
-        <ButtonContainer>
-          <LastViewButton
-            zoom={viewport.zoom}
-            onClick={setViewport}
-            latitude={viewport.latitude}
-            longitude={viewport.longitude}
+      <Menu isOpen={false} pageWrapId={"page-wrap"} outerContainerId={"outer-container"}>
+        <span>TEST</span>
+        <span>TEST</span>
+        <span>TEST</span>
+        <span>TEST</span>
+        <span>TEST</span>
+        <span>TEST</span>
+        <span>TEST</span>
+        <span>TEST</span>
+        <span>TEST</span>
+        <span>TEST</span>
+        <span>TEST</span>
+        <span>TEST</span>
+        <span>TEST</span>
+        <span>TEST</span>
+        <span>TEST</span>
+        <span>TEST</span>
+      </Menu>
+      <main id="page-wrap">
+        <ReactModal
+          isOpen={visible}
+          style={{
+            overlay: {
+              backgroundColor: "rgba(0, 0, 0, 0.4)"
+            },
+            content: {
+              color: "lightsteelblue"
+            }
+          }}>
+          <Gallery
+            images={IMAGES}
+            enableImageSelection={false}
+            showLightboxThumbnails={true}
+            backdropClosesModal={true}
           />
-        </ButtonContainer>
-      )}
-      <ReactMapGL
-        {...viewport}
-        mapStyle={"mapbox://styles/sebastiankurp/cjxsbmb5f79rd1cp6511l5aii"}
-        mapboxApiAccessToken={mapboxKey}
-        onViewportChange={viewport => setViewport(viewport)}>
-        <HomeMarker />
-        {CountryMarkers.map(countryMarker => {
-          return (
-            <CountryMapMarker
+          ,
+        </ReactModal>
+        {visible ? null : (
+          <ButtonContainer>
+            <LastViewButton
               zoom={viewport.zoom}
-              latitude={countryMarker.latitude}
-              longitude={countryMarker.longitude}
-              country={countryMarker.country}
-              visited={countryMarker.visited}
               onClick={setViewport}
+              latitude={viewport.latitude}
+              longitude={viewport.longitude}
             />
-          )
-        })}
-        {JapanTrip.map(cityMarker => {
-          return (
-            <CityMarker
-              zoom={viewport.zoom}
-              latitude={cityMarker.latitude}
-              longitude={cityMarker.longitude}
-              city={cityMarker.city}
-              onClick={setViewport}
-              setZoom={cityMarker.zoom != null ? cityMarker.zoom : 11}
-            />
-          )
-        })}
-        {LandMarks.map(landmark => {
-          return (
-            <LandMarkMarker
-              zoom={viewport.zoom}
-              latitude={landmark.latitude}
-              longitude={landmark.longitude}
-              landmark={landmark.landmark}
-              onClick={setVisible}
-            />
-          )
-        })}
-      </ReactMapGL>
+          </ButtonContainer>
+        )}
+        <ReactMapGL
+          {...viewport}
+          mapStyle={"mapbox://styles/sebastiankurp/cjxsbmb5f79rd1cp6511l5aii"}
+          mapboxApiAccessToken={mapboxKey}
+          onViewportChange={viewport => setViewport(viewport)}>
+          <HomeMarker />
+          {CountryMarkers.map(countryMarker => {
+            return (
+              <CountryMapMarker
+                zoom={viewport.zoom}
+                latitude={countryMarker.latitude}
+                longitude={countryMarker.longitude}
+                country={countryMarker.country}
+                visited={countryMarker.visited}
+                onClick={setViewport}
+              />
+            )
+          })}
+          {JapanTrip.map(cityMarker => {
+            return (
+              <CityMarker
+                zoom={viewport.zoom}
+                latitude={cityMarker.latitude}
+                longitude={cityMarker.longitude}
+                city={cityMarker.city}
+                onClick={setViewport}
+                setZoom={cityMarker.zoom != null ? cityMarker.zoom : 11}
+              />
+            )
+          })}
+          {LandMarks.map(landmark => {
+            return (
+              <LandMarkMarker
+                zoom={viewport.zoom}
+                latitude={landmark.latitude}
+                longitude={landmark.longitude}
+                landmark={landmark.landmark}
+                onClick={setVisible}
+              />
+            )
+          })}
+        </ReactMapGL>
+      </main>
     </div>
   )
 }
