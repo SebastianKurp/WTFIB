@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Helmet } from "react-helmet"
-import ReactMapGL, { Marker, Popup } from "react-map-gl"
+import ReactMapGL from "react-map-gl"
 import ReactModal from "react-modal"
 import Gallery from "react-grid-gallery"
 import { scaleDown as Menu } from "react-burger-menu"
@@ -144,7 +144,10 @@ function App() {
       </Helmet>
       {drawer ? null : (
         <DrawerButton onClick={() => showDrawer(!drawer)}>
-          <img src="https://img.icons8.com/material-sharp/24/000000/menu.png" />
+          <img
+            src="https://img.icons8.com/material-sharp/24/000000/menu.png"
+            alt="Hamburger Menu Icon"
+          />
         </DrawerButton>
       )}
       <Menu isOpen={drawer} pageWrapId={"page-wrap"} outerContainerId={"outer-container"}>
