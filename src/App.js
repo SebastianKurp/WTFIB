@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet"
 import ReactMapGL from "react-map-gl"
 import ReactModal from "react-modal"
 import Gallery from "react-grid-gallery"
-import { scaleDown as Menu } from "react-burger-menu"
+import { scaleDown as MenuContainer } from "react-burger-menu"
 import styled from "@emotion/styled"
 
 import HomeMarker from "./components/HomeMarker"
@@ -95,6 +95,16 @@ function App() {
     z-index: 100;
   `
 
+  const Title = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 20px;
+    left: 43%;
+    width: 200px;
+    z-index: 100;
+  `
   const DrawerButton = styled.button`
     display: flex;
     align-items: center;
@@ -112,6 +122,12 @@ function App() {
     outline: inherit;
   `
 
+  const Menu = styled.div`
+    display: flex;
+    flex-direction: row;
+
+    background-color: aqua;
+  `
   const [viewport, setViewport] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -150,7 +166,7 @@ function App() {
           />
         </DrawerButton>
       )}
-      <Menu isOpen={drawer} pageWrapId={"page-wrap"} outerContainerId={"outer-container"}>
+      <MenuContainer isOpen={drawer} pageWrapId={"page-wrap"} outerContainerId={"outer-container"}>
         <span>TEST</span>
         <span>TEST</span>
         <span>TEST</span>
@@ -173,7 +189,7 @@ function App() {
           }}>
           test button
         </button>
-      </Menu>
+      </MenuContainer>
       <main id="page-wrap">
         <ReactModal
           isOpen={visible}
@@ -205,7 +221,7 @@ function App() {
         )}
         <ReactMapGL
           {...viewport}
-          mapStyle={"mapbox://styles/sebastiankurp/cjxsbmb5f79rd1cp6511l5aii"}
+          mapStyle={"mapbox://styles/sebastiankurp/cjxsbmb5f79rd1cp6511l5aii?optimize=true"}
           mapboxApiAccessToken={mapboxKey}
           onViewportChange={viewport => setViewport(viewport)}>
           <HomeMarker />
