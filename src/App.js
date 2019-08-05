@@ -193,6 +193,7 @@ function App() {
       <main id="page-wrap">
         <ReactModal
           isOpen={visible}
+          onRequestClose={() => setVisible(false)}
           style={{
             overlay: {
               backgroundColor: "rgba(0, 0, 0, 0.4)"
