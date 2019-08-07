@@ -54,12 +54,11 @@ const CountryMarkers = [
 //zoom, latitude, longitude, city
 const JapanTrip = [
   {
-    latitude: 35.68536,
+    latitude: 139.753372,
     longitude: 139.753372,
     city: "Tokyo"
   },
   {
-    zoom: 10,
     latitude: 35.3606,
     longitude: 138.7274,
     city: "Fujisan"
@@ -127,6 +126,7 @@ function App() {
   const Menu = styled.div`
     display: flex !important ;
     flex-direction: column;
+    flex-grow: 
     align-items: center;
     min-height: 100vh;
     background-color: #232C43;
@@ -137,6 +137,28 @@ function App() {
   width: 75%;
   height: auto;
  `
+  const InnerMenu = styled.div`
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 40px;
+    min-height: 500px;
+  `
+  const OpenAboutMeModal = styled.button`
+    all:unset;
+    cursor: pointer;
+ `
+
+  const CloseDrawerButton = styled.button`
+    all:unset;
+    cursor: pointer;
+    padding: 20px;
+    background-color: #ffffff;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+ `
+
   const [viewport, setViewport] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -151,7 +173,10 @@ function App() {
 
   //ModalVisiblity
   const [visible, setVisible] = useState(false)
-  const [drawer, showDrawer] = useState(false)
+
+  const [aboutMeModalVisible, setAboutMeModalVisible] = useState(true)
+
+  const [drawer, showDrawer] = useState(true)
 
   useEffect(() => {
     document.addEventListener("touchstart", function() {}, true)
@@ -182,16 +207,32 @@ function App() {
             backgroundImage={avatar}
             backgroundScale={1.05}
           />
-          <span>About Me </span>
-          <button
-            onClick={() => {
-              showDrawer(false)
-            }}>
-            Close Drawer
-          </button>
+          <InnerMenu>
+            <OpenAboutMeModal onClick={() => setAboutMeModalVisible(true)}>About Me </OpenAboutMeModal>
+            <CloseDrawerButton
+              onClick={() => {
+                showDrawer(false)
+              }}>
+              Close Drawer
+            </CloseDrawerButton>
+          </InnerMenu>
         </Menu>
       </MenuContainer>
       <main id="page-wrap">
+        <ReactModal
+          isOpen={aboutMeModalVisible}
+          onRequestClose={() => setAboutMeModalVisible(false)}
+          style={{
+            overlay: {
+              backgroundColor: "rgba(0, 0, 0, 0.4)"
+            },
+            content: {
+              backgroundColor: "#232C43",
+              borderRadius: "30px",
+              border: "none"
+            }
+          }}>
+        </ReactModal>
         <ReactModal
           isOpen={visible}
           onRequestClose={() => setVisible(false)}
