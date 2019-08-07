@@ -5,6 +5,8 @@ import ReactModal from "react-modal"
 import Gallery from "react-grid-gallery"
 import { scaleDown as MenuContainer } from "react-burger-menu"
 import styled from "@emotion/styled"
+import Hexagon from "react-hexagon";
+import avatar from "./assets/avatar.jpg";
 
 import HomeMarker from "./components/HomeMarker"
 import CountryMarker from "./components/CountryMarker"
@@ -123,11 +125,18 @@ function App() {
   `
 
   const Menu = styled.div`
-    display: flex;
-    flex-direction: row;
-
-    background-color: aqua;
+    display: flex !important ;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #232C43;
   `
+
+  const HexagonImg = styled(Hexagon)`
+  align-self: center;
+  width: 75%;
+  height: auto;
+ `
   const [viewport, setViewport] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -166,29 +175,21 @@ function App() {
           />
         </DrawerButton>
       )}
-      <MenuContainer isOpen={drawer} pageWrapId={"page-wrap"} outerContainerId={"outer-container"}>
-        <span>TEST</span>
-        <span>TEST</span>
-        <span>TEST</span>
-        <span>TEST</span>
-        <span>TEST</span>
-        <span>TEST</span>
-        <span>TEST</span>
-        <span>TEST</span>
-        <span>TEST</span>
-        <span>TEST</span>
-        <span>TEST</span>
-        <span>TEST</span>
-        <span>TEST</span>
-        <span>TEST</span>
-        <span>TEST</span>
-        <span>TEST</span>
-        <button
-          onClick={() => {
-            showDrawer(false)
-          }}>
-          test button
-        </button>
+      <MenuContainer isOpen={drawer} pageWrapId={"page-wrap"} outerContainerId={"outer-container"} disableOverlayClick={() => showDrawer(false)}>
+        <Menu>
+          <HexagonImg
+            style={{ stroke: "#8367C7"}}
+            backgroundImage={avatar}
+            backgroundScale={1.05}
+          />
+          <span>About Me </span>
+          <button
+            onClick={() => {
+              showDrawer(false)
+            }}>
+            Close Drawer
+          </button>
+        </Menu>
       </MenuContainer>
       <main id="page-wrap">
         <ReactModal
