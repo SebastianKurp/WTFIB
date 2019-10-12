@@ -56,7 +56,7 @@ const CountryMarker = ({ zoom, latitude, longitude, country, visited, onClick })
           <CountryMarkerOuterCircle
             onMouseOver={() => setPopUpVisible(true)}
             onMouseLeave={() => setPopUpVisible(false)}
-            onClick={() =>
+            onClick={() => {
               onClick({
                 width: window.innerWidth,
                 height: window.innerHeight,
@@ -64,7 +64,7 @@ const CountryMarker = ({ zoom, latitude, longitude, country, visited, onClick })
                 latitude,
                 longitude
               })
-            }>
+            }}>
             <CountryMarkerInnerCircle />
           </CountryMarkerOuterCircle>
         </Marker>
