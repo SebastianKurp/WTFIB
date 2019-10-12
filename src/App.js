@@ -38,43 +38,25 @@ const GET_MAPMARKERS_VISITED = gql`
     }
     landMarks {
       id
-      location
+      landmark
       latitude
       longitude
     }
   }
 `
-const IMAGES = [
-  {
-    src: "https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_b.jpg",
-    thumbnail: "https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_n.jpg",
-    thumbnailWidth: 320,
-    thumbnailHeight: 174,
-    caption: "After Rain (Jeshu John - designerspics.com)"
-  },
-  {
-    src: "https://c2.staticflickr.com/9/8356/28897120681_3b2c0f43e0_b.jpg",
-    thumbnail: "https://c2.staticflickr.com/9/8356/28897120681_3b2c0f43e0_n.jpg",
-    thumbnailWidth: 320,
-    thumbnailHeight: 212,
-    caption: "Boats (Jeshu John - designerspics.com)"
-  },
 
-  {
-    src: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg",
-    thumbnail: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_n.jpg",
-    thumbnailWidth: 320,
-    thumbnailHeight: 212
+const GET_LANDMARKS_PHOTOS = gql`
+  query landmarkImages($id: ID!) {
+    landMark(id: $id) {
+      id
+      photos {
+        id
+        filename
+        url
+      }
+    }
   }
-]
-
-const LandMarks = [
-  {
-    latitude: 35.662,
-    longitude: 139.7038,
-    landmark: "Shibuya"
-  }
-]
+`
 
 function App() {
   const ButtonContainer = styled.div`
@@ -84,16 +66,6 @@ function App() {
     z-index: 100;
   `
 
-  const Title = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 20px;
-    left: 43%;
-    width: 200px;
-    z-index: 100;
-  `
   const DrawerButton = styled.button`
     display: flex;
     align-items: center;
@@ -159,7 +131,7 @@ function App() {
   //35.662,
   //     longitude: 139.7038,
 
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState("")
 
   const [aboutMeModalVisible, setAboutMeModalVisible] = useState(false)
 
@@ -167,7 +139,6 @@ function App() {
 
   useEffect(() => {
     document.addEventListener("touchstart", function() {}, true)
-    console.log(viewport)
     // window.addEventListener(
     //   "resize",
     //   setViewport({ ...viewport, height: window.innerHeight, width: window.innerWidth })
@@ -227,8 +198,8 @@ function App() {
             }
           }}></ReactModal>
         <ReactModal
-          isOpen={visible}
-          onRequestClose={() => setVisible(false)}
+          isOpen={visible !== ""}
+          onRequestClose={() => setVisible("")}
           style={{
             overlay: {
               backgroundColor: "rgba(0, 0, 0, 0.4)"
@@ -237,15 +208,29 @@ function App() {
               color: "lightsteelblue"
             }
           }}>
-          <Gallery
-            images={IMAGES}
-            enableImageSelection={false}
-            showLightboxThumbnails={true}
-            backdropClosesModal={true}
-          />
-          ,
+          <Query query={GET_LANDMARKS_PHOTOS} variables={{ id: "rec2Y5NhpDE3j0xUM" }}>
+            {({ loading, error, data }) => {
+              if (loading) return "Loading..."
+              if (error) return `Error! ${error.message}`
+              const images = data.landMark.photos.map(photo => ({
+                src: photo.url,
+                thumbnail: photo.url,
+                caption: photo.filename,
+                thumbnailWidth: 320,
+                thumbnailHeight: 174
+              }))
+              return (
+                <Gallery
+                  images={images}
+                  enableImageSelection={false}
+                  showLightboxThumbnails={true}
+                  backdropClosesModal={true}
+                />
+              )
+            }}
+          </Query>
         </ReactModal>
-        {visible ? null : (
+        {visible !== "" ? null : (
           <ButtonContainer>
             <LastViewButton
               zoom={viewport.zoom}
@@ -299,7 +284,7 @@ function App() {
                       latitude={landmark.latitude}
                       longitude={landmark.longitude}
                       landmark={landmark.landmark}
-                      onClick={setVisible}
+                      onClick={() => setVisible(landmark.id)}
                     />
                   )
                 })}
