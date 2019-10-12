@@ -9,6 +9,7 @@ import Hexagon from "react-hexagon"
 import avatar from "./assets/avatar.jpg"
 import { Query } from "react-apollo"
 import { gql } from "apollo-boost"
+import { RingLoader } from "react-spinners"
 
 import HomeMarker from "./components/HomeMarker"
 import CountryMarker from "./components/CountryMarker"
@@ -59,6 +60,14 @@ const GET_LANDMARKS_PHOTOS = gql`
 `
 
 function App() {
+  const LoadingContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+  `
+
   const ButtonContainer = styled.div`
     position: absolute;
     top: 10px;
@@ -168,19 +177,19 @@ function App() {
           <HexagonImg
             style={{ stroke: "#8367C7" }}
             backgroundImage={avatar}
-            backgroundScale={1.05}
+            backgroundScale={1.1}
           />
-          <InnerMenu>
-            <OpenAboutMeModal onClick={() => setAboutMeModalVisible(true)}>
-              About Me{" "}
-            </OpenAboutMeModal>
-            <CloseDrawerButton
-              onClick={() => {
-                showDrawer(false)
-              }}>
-              Close Drawer
-            </CloseDrawerButton>
-          </InnerMenu>
+          {/*<InnerMenu>*/}
+          {/*  <OpenAboutMeModal onClick={() => setAboutMeModalVisible(true)}>*/}
+          {/*    About Me{" "}*/}
+          {/*  </OpenAboutMeModal>*/}
+          {/*  <CloseDrawerButton*/}
+          {/*    onClick={() => {*/}
+          {/*      showDrawer(false)*/}
+          {/*    }}>*/}
+          {/*    Close Drawer*/}
+          {/*  </CloseDrawerButton>*/}
+          {/*</InnerMenu>*/}
         </Menu>
       </MenuContainer>
       <main id="page-wrap">
@@ -210,14 +219,19 @@ function App() {
           }}>
           <Query query={GET_LANDMARKS_PHOTOS} variables={{ id: "rec2Y5NhpDE3j0xUM" }}>
             {({ loading, error, data }) => {
-              if (loading) return "Loading..."
+              if (loading)
+                return (
+                  <LoadingContainer>
+                    <RingLoader sizeUnit={"px"} size={120} color={"#8367C7"} loading={true} />
+                  </LoadingContainer>
+                )
               if (error) return `Error! ${error.message}`
               const images = data.landMark.photos.map(photo => ({
                 src: photo.url,
                 thumbnail: photo.url,
                 caption: photo.filename,
-                thumbnailWidth: 320,
-                thumbnailHeight: 174
+                thumbnailWidth: 250,
+                thumbnailHeight: 200
               }))
               return (
                 <Gallery
@@ -242,7 +256,12 @@ function App() {
         )}
         <Query query={GET_MAPMARKERS_VISITED}>
           {({ loading, error, data }) => {
-            if (loading) return "Loading..."
+            if (loading)
+              return (
+                <LoadingContainer>
+                  <RingLoader sizeUnit={"px"} size={120} color={"#8367C7"} loading={true} />
+                </LoadingContainer>
+              )
             if (error) return `Error! ${error.message}`
             return (
               <ReactMapGL
