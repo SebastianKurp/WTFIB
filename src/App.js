@@ -5,19 +5,45 @@ import ReactModal from "react-modal"
 import Gallery from "react-grid-gallery"
 import { scaleDown as MenuContainer } from "react-burger-menu"
 import styled from "@emotion/styled"
-import Hexagon from "react-hexagon";
-import avatar from "./assets/avatar.jpg";
+import Hexagon from "react-hexagon"
+import avatar from "./assets/avatar.jpg"
+import { Query } from "react-apollo"
+import { gql } from "apollo-boost"
 
 import HomeMarker from "./components/HomeMarker"
 import CountryMarker from "./components/CountryMarker"
 import CityMarker from "./components/CityMarker"
 import LandMarkMarker from "./components/LandMarkMarker"
 import LastViewButton from "./components/LastViewButton"
-
 import "./App.css"
 
-const mapboxKey = process.env.REACT_APP_MAPBOX_KEY
+const mapboxKey =
+  "pk.eyJ1Ijoic2ViYXN0aWFua3VycCIsImEiOiJjandwZWZ1emkxOHR1NDhwOG1lM2pmeHVmIn0.fHuAftP7b6uRy1UfWieSPQ"
 
+const GET_MAPMARKERS_VISITED = gql`
+  query CountriesCitiesLandmarks {
+    countries {
+      id
+      country
+      visited
+      latitude
+      longitude
+    }
+    cities {
+      id
+      city
+      visited
+      latitude
+      longitude
+    }
+    landMarks {
+      id
+      location
+      latitude
+      longitude
+    }
+  }
+`
 const IMAGES = [
   {
     src: "https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_b.jpg",
@@ -39,44 +65,6 @@ const IMAGES = [
     thumbnail: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_n.jpg",
     thumbnailWidth: 320,
     thumbnailHeight: 212
-  }
-]
-
-const CountryMarkers = [
-  {
-    country: "Tokyo",
-    visited: "Summer 2019",
-    latitude: 35.68536,
-    longitude: 139.753372
-  }
-]
-
-//zoom, latitude, longitude, city
-const JapanTrip = [
-  {
-    latitude: 139.753372,
-    longitude: 139.753372,
-    city: "Tokyo"
-  },
-  {
-    latitude: 35.3606,
-    longitude: 138.7274,
-    city: "Fujisan"
-  },
-  {
-    latitude: 34.6937,
-    longitude: 135.5023,
-    city: "Osaka"
-  },
-  {
-    latitude: 34.3853,
-    longitude: 132.4553,
-    city: "Hiroshima"
-  },
-  {
-    latitude: 35.0116,
-    longitude: 135.7681,
-    city: "Kyoto"
   }
 ]
 
@@ -133,31 +121,31 @@ function App() {
   `
 
   const HexagonImg = styled(Hexagon)`
-  align-self: center;
-  width: 75%;
-  height: auto;
- `
+    align-self: center;
+    width: 75%;
+    height: auto;
+  `
   const InnerMenu = styled.div`
-    display:flex;
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin-top: 40px;
     min-height: 500px;
   `
   const OpenAboutMeModal = styled.button`
-    all:unset;
+    all: unset;
     cursor: pointer;
- `
+  `
 
   const CloseDrawerButton = styled.button`
-    all:unset;
+    all: unset;
     cursor: pointer;
     padding: 20px;
     background-color: #ffffff;
     width: 60%;
     margin-left: auto;
     margin-right: auto;
- `
+  `
 
   const [viewport, setViewport] = useState({
     width: window.innerWidth,
@@ -171,15 +159,15 @@ function App() {
   //35.662,
   //     longitude: 139.7038,
 
-  //ModalVisiblity
   const [visible, setVisible] = useState(false)
 
-  const [aboutMeModalVisible, setAboutMeModalVisible] = useState(true)
+  const [aboutMeModalVisible, setAboutMeModalVisible] = useState(false)
 
-  const [drawer, showDrawer] = useState(true)
+  const [drawer, showDrawer] = useState(false)
 
   useEffect(() => {
     document.addEventListener("touchstart", function() {}, true)
+    console.log(viewport)
     // window.addEventListener(
     //   "resize",
     //   setViewport({ ...viewport, height: window.innerHeight, width: window.innerWidth })
@@ -200,15 +188,21 @@ function App() {
           />
         </DrawerButton>
       )}
-      <MenuContainer isOpen={drawer} pageWrapId={"page-wrap"} outerContainerId={"outer-container"} disableOverlayClick={() => showDrawer(false)}>
+      <MenuContainer
+        isOpen={drawer}
+        pageWrapId={"page-wrap"}
+        outerContainerId={"outer-container"}
+        disableOverlayClick={() => showDrawer(false)}>
         <Menu>
           <HexagonImg
-            style={{ stroke: "#8367C7"}}
+            style={{ stroke: "#8367C7" }}
             backgroundImage={avatar}
             backgroundScale={1.05}
           />
           <InnerMenu>
-            <OpenAboutMeModal onClick={() => setAboutMeModalVisible(true)}>About Me </OpenAboutMeModal>
+            <OpenAboutMeModal onClick={() => setAboutMeModalVisible(true)}>
+              About Me{" "}
+            </OpenAboutMeModal>
             <CloseDrawerButton
               onClick={() => {
                 showDrawer(false)
@@ -231,8 +225,7 @@ function App() {
               borderRadius: "30px",
               border: "none"
             }
-          }}>
-        </ReactModal>
+          }}></ReactModal>
         <ReactModal
           isOpen={visible}
           onRequestClose={() => setVisible(false)}
@@ -262,48 +255,58 @@ function App() {
             />
           </ButtonContainer>
         )}
-        <ReactMapGL
-          {...viewport}
-          mapStyle={"mapbox://styles/sebastiankurp/cjxsbmb5f79rd1cp6511l5aii?optimize=true"}
-          mapboxApiAccessToken={mapboxKey}
-          onViewportChange={viewport => setViewport(viewport)}>
-          <HomeMarker />
-          {CountryMarkers.map(countryMarker => {
+        <Query query={GET_MAPMARKERS_VISITED}>
+          {({ loading, error, data }) => {
+            if (loading) return "Loading..."
+            if (error) return `Error! ${error.message}`
             return (
-              <CountryMarker
-                zoom={viewport.zoom}
-                latitude={countryMarker.latitude}
-                longitude={countryMarker.longitude}
-                country={countryMarker.country}
-                visited={countryMarker.visited}
-                onClick={setViewport}
-              />
+              <ReactMapGL
+                {...viewport}
+                mapStyle={"mapbox://styles/sebastiankurp/cjxsbmb5f79rd1cp6511l5aii?optimize=true"}
+                mapboxApiAccessToken={mapboxKey}
+                onViewportChange={viewport => {
+                  setViewport(viewport)
+                }}>
+                <HomeMarker />
+                {data.countries.map(countryMarker => {
+                  return (
+                    <CountryMarker
+                      zoom={viewport.zoom}
+                      latitude={countryMarker.latitude}
+                      longitude={countryMarker.longitude}
+                      country={countryMarker.country}
+                      visited={countryMarker.visited}
+                      onClick={setViewport}
+                    />
+                  )
+                })}
+                {data.cities.map(cityMarker => {
+                  return (
+                    <CityMarker
+                      zoom={viewport.zoom}
+                      latitude={cityMarker.latitude}
+                      longitude={cityMarker.longitude}
+                      city={cityMarker.city}
+                      onClick={setViewport}
+                      setZoom={cityMarker.zoom != null ? cityMarker.zoom : 11}
+                    />
+                  )
+                })}
+                {data.landMarks.map(landmark => {
+                  return (
+                    <LandMarkMarker
+                      zoom={viewport.zoom}
+                      latitude={landmark.latitude}
+                      longitude={landmark.longitude}
+                      landmark={landmark.landmark}
+                      onClick={setVisible}
+                    />
+                  )
+                })}
+              </ReactMapGL>
             )
-          })}
-          {JapanTrip.map(cityMarker => {
-            return (
-              <CityMarker
-                zoom={viewport.zoom}
-                latitude={cityMarker.latitude}
-                longitude={cityMarker.longitude}
-                city={cityMarker.city}
-                onClick={setViewport}
-                setZoom={cityMarker.zoom != null ? cityMarker.zoom : 11}
-              />
-            )
-          })}
-          {LandMarks.map(landmark => {
-            return (
-              <LandMarkMarker
-                zoom={viewport.zoom}
-                latitude={landmark.latitude}
-                longitude={landmark.longitude}
-                landmark={landmark.landmark}
-                onClick={setVisible}
-              />
-            )
-          })}
-        </ReactMapGL>
+          }}
+        </Query>
       </main>
     </div>
   )
