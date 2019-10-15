@@ -217,7 +217,7 @@ function App() {
               color: "lightsteelblue"
             }
           }}>
-          <Query query={GET_LANDMARKS_PHOTOS} variables={{ id: "rec2Y5NhpDE3j0xUM" }}>
+          <Query query={GET_LANDMARKS_PHOTOS} variables={{ id: visible }}>
             {({ loading, error, data }) => {
               if (loading)
                 return (
