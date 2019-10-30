@@ -98,6 +98,11 @@ function App() {
     flex-grow: 
     align-items: center;
     min-height: 100vh;
+    border-color: #8367c7;
+    padding-top: 10px;
+    border-style: solid;
+    border-left-width: 0px;
+    border-right-width: 5px;
     background-color: #232C43;
   `
 
@@ -145,27 +150,6 @@ function App() {
     :hover {
       opacity: 0.7;
     }
-  `
-  const InnerMenu = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-top: 40px;
-    min-height: 500px;
-  `
-  const OpenAboutMeModal = styled.button`
-    all: unset;
-    cursor: pointer;
-  `
-
-  const CloseDrawerButton = styled.button`
-    all: unset;
-    cursor: pointer;
-    padding: 20px;
-    background-color: #ffffff;
-    width: 60%;
-    margin-left: auto;
-    margin-right: auto;
   `
 
   const [viewport, setViewport] = useState({
