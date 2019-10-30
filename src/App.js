@@ -142,11 +142,11 @@ function App() {
     display: flex;
     flex-direction: row;
     align-items: center;
-    jusitfy-content: space-between;
     padding-left: 5%;
     padding-right: 5%;
   `
   const Icon = styled.a`
+    margin-left: 5px;
     :hover {
       opacity: 0.7;
     }
@@ -217,16 +217,16 @@ function App() {
           </AboutMeParagraph>
           <IconContainer>
             <Icon href="https://www.github.com/sebastianKurp" target="_blank">
-              <img src="https://img.icons8.com/nolan/48/000000/github.png" />
+              <img src="https://img.icons8.com/nolan/48/000000/github.png" alt="github logo" />
             </Icon>
             <Icon href="https://twitter.com/sebbykurps" target="_blank">
-              <img src="https://img.icons8.com/nolan/48/000000/twitter.png" />
+              <img src="https://img.icons8.com/nolan/48/000000/twitter.png" alt="twitter logo" />
             </Icon>
             <Icon href="https://unsplash.com/sebbykurps" target="_blank">
-              <img src="https://img.icons8.com/nolan/48/000000/unsplash.png" />
+              <img src="https://img.icons8.com/nolan/48/000000/unsplash.png" alt="unsplash logo" />
             </Icon>
             <Icon href="https://linkedin.com/sebastiankurpiel">
-              <img src="https://img.icons8.com/nolan/48/000000/linkedin.png" />
+              <img src="https://img.icons8.com/nolan/48/000000/linkedin.png" alt="linkedin logo" />
             </Icon>
           </IconContainer>
         </Menu>
