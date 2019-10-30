@@ -106,6 +106,46 @@ function App() {
     width: 75%;
     height: auto;
   `
+  const AboutMeParagraph = styled.p`
+    padding-left: 5%;
+    padding-right: 5%;
+    text-align: left;
+    font-size: 14px;
+    line-height: 24px;
+    font-family: "Montserrat", sans-serif;
+    color: #d6e5e3;
+  `
+  const Hey = styled.span`
+    font-size: 30px;
+    font-weight: 20px;
+  `
+  const Name = styled.span`
+    padding-left: 2px;
+    font-size: 24px;
+    font-weight: 20px;
+    color: #8367c7;
+  `
+  const DraftbitLink = styled.a`
+    text-decoration: none;
+    color: #5a45ff;
+    :hover:color: #5a45ff;
+    :active: color: #5a45ff;
+    :focus: color: #5a45ff;
+  `
+
+  const IconContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    jusitfy-content: space-between;
+    padding-left: 5%;
+    padding-right: 5%;
+  `
+  const Icon = styled.a`
+    :hover {
+      opacity: 0.7;
+    }
+  `
   const InnerMenu = styled.div`
     display: flex;
     flex-direction: column;
@@ -144,7 +184,7 @@ function App() {
 
   const [aboutMeModalVisible, setAboutMeModalVisible] = useState(false)
 
-  const [drawer, showDrawer] = useState(false)
+  const [drawer, showDrawer] = useState(true)
 
   useEffect(() => {
     document.addEventListener("touchstart", function() {}, true)
@@ -179,17 +219,32 @@ function App() {
             backgroundImage={avatar}
             backgroundScale={1.1}
           />
-          {/*<InnerMenu>*/}
-          {/*  <OpenAboutMeModal onClick={() => setAboutMeModalVisible(true)}>*/}
-          {/*    About Me{" "}*/}
-          {/*  </OpenAboutMeModal>*/}
-          {/*  <CloseDrawerButton*/}
-          {/*    onClick={() => {*/}
-          {/*      showDrawer(false)*/}
-          {/*    }}>*/}
-          {/*    Close Drawer*/}
-          {/*  </CloseDrawerButton>*/}
-          {/*</InnerMenu>*/}
+          <AboutMeParagraph>
+            <Hey>Hi, </Hey> <br />
+            I'm <Name>Sebastian Kurpiel</Name>. Unsplash featured photographer with a million views,
+            and a traveller waiting for an excuse to hop on a plane. People kept asking me "Where
+            did you take that?" or "I want to go there!", so I decided to GeoTag my photos to make
+            it easier for you to find the spots! <br />
+            When I'm not traveling, you can find me working on
+            <DraftbitLink href="https://www.draftbit.com"> draftbit </DraftbitLink>. A tool giving
+            people the power to create apps mobile apps with zero code!
+            <br />
+            Feel free to check out my github or follow me on Twitter for some fresh memes!
+          </AboutMeParagraph>
+          <IconContainer>
+            <Icon href="https://www.github.com/sebastianKurp" target="_blank">
+              <img src="https://img.icons8.com/nolan/48/000000/github.png" />
+            </Icon>
+            <Icon href="https://twitter.com/sebbykurps" target="_blank">
+              <img src="https://img.icons8.com/nolan/48/000000/twitter.png" />
+            </Icon>
+            <Icon href="https://unsplash.com/sebbykurps" target="_blank">
+              <img src="https://img.icons8.com/nolan/48/000000/unsplash.png" />
+            </Icon>
+            <Icon href="https://linkedin.com/sebastiankurpiel">
+              <img src="https://img.icons8.com/nolan/48/000000/linkedin.png" />
+            </Icon>
+          </IconContainer>
         </Menu>
       </MenuContainer>
       <main id="page-wrap">
