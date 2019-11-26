@@ -182,7 +182,7 @@ function App() {
     <div className="App" id="outer-container">
       <Helmet>
         <meta charSet="utf-8" />
-        <title>WTFIB</title>
+        <title>Sebastian Kupriel-WTFIB </title>
       </Helmet>
       {drawer ? null : (
         <DrawerButton onClick={() => showDrawer(!drawer)}>
