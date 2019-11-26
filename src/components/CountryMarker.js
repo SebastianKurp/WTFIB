@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import styled from "@emotion/styled"
 import { Marker, Popup } from "react-map-gl"
 
-const CountryMarker = ({ zoom, latitude, longitude, country, visited, onClick }) => {
+const CountryMarker = ({ zoom, latitude, longitude, country, onClick }) => {
   const CountryMarkerOuterCircle = styled.button`
     display: flex;
     align-items: center;
@@ -47,7 +47,7 @@ const CountryMarker = ({ zoom, latitude, longitude, country, visited, onClick })
             anchor="top">
             <Popover>
               <PopoverInfo>
-                {country}, {visited}
+                {country}
               </PopoverInfo>
             </Popover>
           </Popup>

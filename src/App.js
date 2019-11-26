@@ -26,14 +26,12 @@ const GET_MAPMARKERS_VISITED = gql`
     countries {
       id
       country
-      visited
       latitude
       longitude
     }
     cities {
       id
       city
-      visited
       latitude
       longitude
     }
@@ -104,6 +102,7 @@ function App() {
     border-left-width: 0px;
     border-right-width: 5px;
     background-color: #232C43;
+    overflow-y: hidden;
   `
 
   const HexagonImg = styled(Hexagon)`
@@ -318,7 +317,6 @@ function App() {
                       latitude={countryMarker.latitude}
                       longitude={countryMarker.longitude}
                       country={countryMarker.country}
-                      visited={countryMarker.visited}
                       onClick={setViewport}
                     />
                   )
