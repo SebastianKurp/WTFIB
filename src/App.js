@@ -213,7 +213,7 @@ function App() {
             <DraftbitLink href="https://www.draftbit.com"> draftbit </DraftbitLink>. A tool giving
             people the power to create apps mobile apps with zero code!
             <br />
-            Feel free to check out my github or follow me on Twitter for some fresh memes!
+            Feel free to check out my github or follow me on Twitter!
           </AboutMeParagraph>
           <IconContainer>
             <Icon href="https://www.github.com/sebastianKurp" target="_blank">
@@ -225,7 +225,7 @@ function App() {
             <Icon href="https://unsplash.com/sebbykurps" target="_blank">
               <img src="https://img.icons8.com/nolan/48/000000/unsplash.png" alt="unsplash logo" />
             </Icon>
-            <Icon href="https://linkedin.com/sebastiankurpiel">
+            <Icon href="https://www.linkedin.com/in/sebastiankurpiel">
               <img src="https://img.icons8.com/nolan/48/000000/linkedin.png" alt="linkedin logo" />
             </Icon>
           </IconContainer>
