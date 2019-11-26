@@ -209,7 +209,7 @@ function App() {
             did you take that?" or "I want to go there!", so I decided to GeoTag my photos to make
             it easier for you to find the spots! <br />
             When I'm not traveling, you can find me working on
-            <DraftbitLink href="https://www.draftbit.com"> draftbit </DraftbitLink>. A tool giving
+            <DraftbitLink href="https://www.draftbit.com" target="_blank"> draftbit </DraftbitLink>. A tool giving
             people the power to create apps mobile apps with zero code!
             <br />
             Feel free to check out my github or follow me on Twitter!
