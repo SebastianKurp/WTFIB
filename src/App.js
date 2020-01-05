@@ -7,6 +7,10 @@ import { scaleDown as MenuContainer } from "react-burger-menu"
 import styled from "@emotion/styled"
 import Hexagon from "react-hexagon"
 import avatar from "./assets/avatar.jpg"
+import unsplashedIcon from "./assets/camera48.png"
+import githubIcon from "./assets/github.png"
+import linkedinIcon from "./assets/linkedin48.png"
+import twitterIcon from "./assets/twitter48.png"
 import { Query } from "react-apollo"
 import { gql } from "apollo-boost"
 import { RingLoader } from "react-spinners"
@@ -220,16 +224,16 @@ function App() {
           </AboutMeParagraph>
           <IconContainer>
             <Icon href="https://www.github.com/sebastianKurp" target="_blank">
-              <img src="https://img.icons8.com/nolan/48/000000/github.png" alt="github logo" />
+              <img src={githubIcon} alt="github logo" />
             </Icon>
             <Icon href="https://twitter.com/sebbykurps" target="_blank">
-              <img src="https://img.icons8.com/nolan/48/000000/twitter.png" alt="twitter logo" />
+              <img src={twitterIcon} alt="twitter logo" />
             </Icon>
             <Icon href="https://unsplash.com/sebbykurps" target="_blank">
-              <img src="https://img.icons8.com/nolan/48/000000/unsplash.png" alt="unsplash logo" />
+              <img src={unsplashedIcon} alt="unsplash logo" />
             </Icon>
             <Icon href="https://www.linkedin.com/in/sebastiankurpiel">
-              <img src="https://img.icons8.com/nolan/48/000000/linkedin.png" alt="linkedin logo" />
+              <img src={linkedinIcon} alt="linkedin logo" />
             </Icon>
           </IconContainer>
         </Menu>
