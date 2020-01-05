@@ -17,6 +17,7 @@ import CityMarker from "./components/CityMarker"
 import LandMarkMarker from "./components/LandMarkMarker"
 import LastViewButton from "./components/LastViewButton"
 import "./App.css"
+import TravelStories from "./components/TravelStories"
 
 const mapboxKey =
   "pk.eyJ1Ijoic2ViYXN0aWFua3VycCIsImEiOiJjandwZWZ1emkxOHR1NDhwOG1lM2pmeHVmIn0.fHuAftP7b6uRy1UfWieSPQ"
@@ -209,8 +210,11 @@ function App() {
             did you take that?" or "I want to go there!", so I decided to GeoTag my photos to make
             it easier for you to find the spots! <br />
             When I'm not traveling, you can find me working on
-            <DraftbitLink href="https://www.draftbit.com" target="_blank"> draftbit </DraftbitLink>. A tool giving
-            people the power to create apps mobile apps with zero code!
+            <DraftbitLink href="https://www.draftbit.com" target="_blank">
+              {" "}
+              draftbit{" "}
+            </DraftbitLink>
+            . A tool giving people the power to create apps mobile apps with zero code!
             <br />
             Feel free to check out my github or follow me on Twitter!
           </AboutMeParagraph>
@@ -292,6 +296,7 @@ function App() {
             />
           </ButtonContainer>
         )}
+        <TravelStories />
         <Query query={GET_MAPMARKERS_VISITED}>
           {({ loading, error, data }) => {
             if (loading)
