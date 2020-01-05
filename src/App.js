@@ -7,6 +7,10 @@ import { scaleDown as MenuContainer } from "react-burger-menu"
 import styled from "@emotion/styled"
 import Hexagon from "react-hexagon"
 import avatar from "./assets/avatar.jpg"
+import unsplashedIcon from "./assets/camera48.png"
+import githubIcon from "./assets/github.png"
+import linkedinIcon from "./assets/linkedin48.png"
+import twitterIcon from "./assets/twitter48.png"
 import { Query } from "react-apollo"
 import { gql } from "apollo-boost"
 import { RingLoader } from "react-spinners"
@@ -209,23 +213,26 @@ function App() {
             did you take that?" or "I want to go there!", so I decided to GeoTag my photos to make
             it easier for you to find the spots! <br />
             When I'm not traveling, you can find me working on
-            <DraftbitLink href="https://www.draftbit.com" target="_blank"> draftbit </DraftbitLink>. A tool giving
-            people the power to create apps mobile apps with zero code!
+            <DraftbitLink href="https://www.draftbit.com" target="_blank">
+              {" "}
+              draftbit{" "}
+            </DraftbitLink>
+            . A tool giving people the power to create apps mobile apps with zero code!
             <br />
             Feel free to check out my github or follow me on Twitter!
           </AboutMeParagraph>
           <IconContainer>
             <Icon href="https://www.github.com/sebastianKurp" target="_blank">
-              <img src="https://img.icons8.com/nolan/48/000000/github.png" alt="github logo" />
+              <img src={githubIcon} alt="github logo" />
             </Icon>
             <Icon href="https://twitter.com/sebbykurps" target="_blank">
-              <img src="https://img.icons8.com/nolan/48/000000/twitter.png" alt="twitter logo" />
+              <img src={twitterIcon} alt="twitter logo" />
             </Icon>
             <Icon href="https://unsplash.com/sebbykurps" target="_blank">
-              <img src="https://img.icons8.com/nolan/48/000000/unsplash.png" alt="unsplash logo" />
+              <img src={unsplashedIcon} alt="unsplash logo" />
             </Icon>
             <Icon href="https://www.linkedin.com/in/sebastiankurpiel">
-              <img src="https://img.icons8.com/nolan/48/000000/linkedin.png" alt="linkedin logo" />
+              <img src={linkedinIcon} alt="linkedin logo" />
             </Icon>
           </IconContainer>
         </Menu>
