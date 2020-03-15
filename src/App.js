@@ -100,7 +100,7 @@ function App() {
     flex-direction: column;
     flex-grow: 
     align-items: center;
-    min-height: 100vh;
+    min-height: calc(100vh - 16px);
     border-color: #8367c7;
     padding-top: 10px;
     border-style: solid;

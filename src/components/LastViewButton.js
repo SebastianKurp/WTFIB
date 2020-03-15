@@ -61,7 +61,7 @@ const LastViewButton = ({ zoom, latitude, longitude, onClick }) => {
             height: window.innerHeight,
             latitude: 0,
             longitude: 0,
-            zoom: 0,
+            zoom: 1,
             pitch: 0
           })
         }>

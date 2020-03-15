@@ -4,7 +4,6 @@ import styled from "@emotion/styled"
 import ReactModal from "react-modal"
 import { Query } from "react-apollo"
 import { gql } from "apollo-boost"
-import instagramAvatar from "../assets/instagramAvatar.jpg"
 
 const GET_STORIES_NAME_AND_TITLE = gql`
   query Stories {
@@ -23,6 +22,14 @@ const GET_STORY = gql`
   query Story($id: ID!) {
     story(id: $id) {
       id
+      name
+      startDate
+      endDate
+      storyCover {
+        id
+        filename
+        url
+      }
       attachments {
         id
         filename
@@ -40,7 +47,8 @@ const TravelStories = () => {
     display: flex;
     justify-content: space-around;
     position: absolute;
-    right: 50%;
+    margin-left: 40%;
+    margin-right: auto;
   `
   const StoriesOuterCircle = styled.button`
     border-color: none;
@@ -67,11 +75,20 @@ const TravelStories = () => {
     border-radius: 50%;
   `
 
+  const ShowStoriesButton = styled.button`
+    text-align: center;
+    text-color: #000000;
+    z-index: 1;
+  `
+
   return (
     <>
       <ReactModal
         isOpen={showStoryModal}
-        onRequestClose={() => toggleStoryModal(false)}
+        onRequestClose={() => {
+          toggleStoryModal(false)
+          toggleStories(true)
+        }}
         style={{
           content: {
             display: "flex",
@@ -85,13 +102,18 @@ const TravelStories = () => {
             {({ loading, error, data }) => {
               if (loading) return null
               if (error) return `Error! ${error.message}`
+              const nameOfTrip = data.story.name
+              const storyCover = data.story.storyCover[0].url
+              const startDate = data.story.startDate
+              const endDate = data.story.endDate
               const storyData = data.story.attachments.map(media => ({
                 url: media.url,
+                duration: 10000,
                 type: media.filename.includes(".mp4") ? "video" : "image",
                 header: {
-                  heading: "@SebbyKurps",
-                  subheading: "Follow on Instagram",
-                  profileImage: instagramAvatar
+                  heading: nameOfTrip,
+                  subheading: `${startDate} - ${endDate}`,
+                  profileImage: storyCover
                 }
               }))
               return (
@@ -103,23 +125,36 @@ const TravelStories = () => {
           </Query>
         </>
       </ReactModal>
-      <StoryContainer>
-        <Query query={GET_STORIES_NAME_AND_TITLE}>
-          {({ loading, error, data }) => {
-            if (loading) return null
-            if (error) return `Error! ${error.message}`
-            return data.stories.map(story => (
-              <StoriesOuterCircle
-                onClick={() => {
-                  selectStoryId(story.id)
-                  toggleStoryModal(true)
-                }}>
-                <StoryHeader src={story.storyCover[0].url} />
-              </StoriesOuterCircle>
-            ))
-          }}
-        </Query>
-      </StoryContainer>
+      {showStories ? (
+        <StoryContainer>
+          <Query query={GET_STORIES_NAME_AND_TITLE}>
+            {({ loading, error, data }) => {
+              if (loading) return null
+              if (error) return `Error! ${error.message}`
+              return data.stories.map(story => (
+                <StoriesOuterCircle
+                  onClick={() => {
+                    selectStoryId(story.id)
+                    toggleStoryModal(true)
+                    toggleStories(false)
+                  }}>
+                  <StoryHeader src={story.storyCover[0].url} />
+                </StoriesOuterCircle>
+              ))
+            }}
+          </Query>
+          <StoriesOuterCircle
+            onClick={() => {
+              toggleStories(false)
+            }}>
+            <span>Hide Stories</span>
+          </StoriesOuterCircle>
+        </StoryContainer>
+      ) : (
+        <StoryContainer>
+          <ShowStoriesButton onClick={() => toggleStories(true)}>Show Stories</ShowStoriesButton>
+        </StoryContainer>
+      )}
     </>
   )
 }
