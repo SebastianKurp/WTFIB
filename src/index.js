@@ -9,7 +9,7 @@ import { ApolloProvider } from "@apollo/react-hooks"
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
-    uri: "https://wtfib-api2.fly.dev"
+    uri: "https://wtfib-api.fly.dev"
   })
 })
 

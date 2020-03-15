@@ -2,63 +2,60 @@ import React, { useState } from "react"
 import Stories from "react-insta-stories"
 import styled from "@emotion/styled"
 import ReactModal from "react-modal"
+import { Query } from "react-apollo"
+import { gql } from "apollo-boost"
+import instagramAvatar from "../assets/instagramAvatar.jpg"
 
-const stories = [
-  {
-    url: "https://picsum.photos/1080/1920",
-    seeMore: ({ close }) => <div style={{ width: "100%", height: "100%" }}>Hello</div>,
-    header: {
-      heading: "Mohit Karekar",
-      subheading: "Posted 5h ago",
-      profileImage: "https://picsum.photos/1000/1000"
+const GET_STORIES_NAME_AND_TITLE = gql`
+  query Stories {
+    stories {
+      id
+      name
+      storyCover {
+        id
+        url
+        filename
+      }
     }
-  },
-  {
-    url:
-      "https://fsa.zobj.net/crop.php?r=dyJ08vhfPsUL3UkJ2aFaLo1LK5lhjA_5o6qEmWe7CW6P4bdk5Se2tYqxc8M3tcgYCwKp0IAyf0cmw9yCmOviFYb5JteeZgYClrug_bvSGgQxKGEUjH9H3s7PS9fQa3rpK3DN3nx-qA-mf6XN",
-    header: {
-      heading: "Mohit Karekar",
-      subheading: "Posted 32m ago",
-      profileImage: "https://picsum.photos/1080/1920"
+  }
+`
+const GET_STORY = gql`
+  query Story($id: ID!) {
+    story(id: $id) {
+      id
+      attachments {
+        id
+        filename
+        url
+      }
     }
-  },
-  {
-    url:
-      "https://media.idownloadblog.com/wp-content/uploads/2016/04/iPhone-wallpaper-abstract-portrait-stars-macinmac.jpg",
-    header: {
-      heading: "mohitk05/react-insta-stories",
-      subheading: "Posted 32m ago",
-      profileImage: "https://avatars0.githubusercontent.com/u/24852829?s=400&v=4"
-    }
-  },
-  {
-    url: "https://storage.googleapis.com/coverr-main/mp4/Footboys.mp4",
-    type: "video",
-    duration: 1000
-  },
-  {
-    url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-    type: "video",
-    seeMore: ({ close }) => <div style={{ width: "100%", height: "100%" }}>Hello</div>
-  },
-  {
-    url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    type: "video"
-  },
-  "https://images.unsplash.com/photo-1534856966153-c86d43d53fe0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=564&q=80"
-]
+  }
+`
 
 const TravelStories = () => {
   const [showStoryModal, toggleStoryModal] = useState(false)
-  const StoriesOuterCircle = styled.button`
-    all: unset;
+  const [showStories, toggleStories] = useState(true)
+  const [selectedStoryId, selectStoryId] = useState("recJnF96eVbg4JRMr")
+  const StoryContainer = styled.div`
     display: flex;
-    width: 60 px;
-    height: 60px;
+    justify-content: space-around;
     position: absolute;
     right: 50%;
-    top: 0;
-    z-index: 10;
+  `
+  const StoriesOuterCircle = styled.button`
+    border-color: none;
+    border-radius: 50%;
+    background: #f09433; 
+    background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
+    background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+    background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    width: 70px;
+    height: 70px;
+    z-index: 1;
     cursor: pointer;
     :hover: opacity: .7;
     :active: opacity: .7;
@@ -67,17 +64,62 @@ const TravelStories = () => {
   const StoryHeader = styled.img`
     height: 60px;
     width: 60px;
-    border-radius: 60px;
-    z-index: 10;
+    border-radius: 50%;
   `
+
   return (
     <>
-      <ReactModal isOpen={showStoryModal} onRequestClose={() => toggleStoryModal(false)}>
-        <div />
+      <ReactModal
+        isOpen={showStoryModal}
+        onRequestClose={() => toggleStoryModal(false)}
+        style={{
+          content: {
+            display: "flex",
+            justifyContent: "center",
+            backgroundColor: "#000000",
+            zIndex: 1000
+          }
+        }}>
+        <>
+          <Query query={GET_STORY} variables={{ id: selectedStoryId }}>
+            {({ loading, error, data }) => {
+              if (loading) return null
+              if (error) return `Error! ${error.message}`
+              const storyData = data.story.attachments.map(media => ({
+                url: media.url,
+                type: media.filename.includes(".mp4") ? "video" : "image",
+                header: {
+                  heading: "@SebbyKurps",
+                  subheading: "Follow on Instagram",
+                  profileImage: instagramAvatar
+                }
+              }))
+              return (
+                <>
+                  <Stories stories={storyData} defaultInterval={1500} width={432} height={650} />
+                </>
+              )
+            }}
+          </Query>
+        </>
       </ReactModal>
-      <StoriesOuterCircle onClick={() => toggleStoryModal(false)}>
-        <StoryHeader src="https://images.unsplash.com/photo-1534856966153-c86d43d53fe0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=564&q=80" />
-      </StoriesOuterCircle>
+      <StoryContainer>
+        <Query query={GET_STORIES_NAME_AND_TITLE}>
+          {({ loading, error, data }) => {
+            if (loading) return null
+            if (error) return `Error! ${error.message}`
+            return data.stories.map(story => (
+              <StoriesOuterCircle
+                onClick={() => {
+                  selectStoryId(story.id)
+                  toggleStoryModal(true)
+                }}>
+                <StoryHeader src={story.storyCover[0].url} />
+              </StoriesOuterCircle>
+            ))
+          }}
+        </Query>
+      </StoryContainer>
     </>
   )
 }

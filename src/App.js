@@ -115,6 +115,7 @@ function App() {
     width: 75%;
     height: auto;
   `
+
   const AboutMeParagraph = styled.p`
     padding-left: 5%;
     padding-right: 5%;
@@ -124,16 +125,19 @@ function App() {
     font-family: "Montserrat", sans-serif;
     color: #d6e5e3;
   `
+
   const Hey = styled.span`
     font-size: 30px;
     font-weight: 20px;
   `
+
   const Name = styled.span`
     padding-left: 2px;
     font-size: 24px;
     font-weight: 20px;
     color: #8367c7;
   `
+
   const DraftbitLink = styled.a`
     text-decoration: none;
     color: #5a45ff;
@@ -164,9 +168,6 @@ function App() {
     zoom: 1,
     pitch: 0
   })
-
-  //35.662,
-  //     longitude: 139.7038,
 
   const [visible, setVisible] = useState("")
 
