@@ -76,8 +76,15 @@ const TravelStories = () => {
   `
 
   const ShowStoriesButton = styled.button`
-    text-align: center;
-    text-color: #000000;
+    display: inline-block;
+    cursor: pointer;
+    color: #666666;
+    font-family: Arial;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 3px 12px;
+    border-radius: 6px;
+    border: 1px solid #dcdcdc;
     z-index: 1;
   `
 
