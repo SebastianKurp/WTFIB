@@ -157,7 +157,7 @@ const TravelStories = () => {
             <span>Hide Stories</span>
           </StoriesOuterCircle>
         </StoryContainer>
-      ) : (
+      ) : showStoryModal ? null : (
         <StoryContainer>
           <ShowStoriesButton onClick={() => toggleStories(true)}>Show Stories</ShowStoriesButton>
         </StoryContainer>

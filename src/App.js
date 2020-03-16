@@ -236,6 +236,9 @@ function App() {
             <Icon href="https://www.linkedin.com/in/sebastiankurpiel">
               <img src={linkedinIcon} alt="linkedin logo" />
             </Icon>
+            <Icon href="https://dev.to/sebastiankurp">
+              <img src={linkedinIcon} alt="devTo logo" />
+            </Icon>
           </IconContainer>
         </Menu>
       </MenuContainer>
