@@ -100,6 +100,7 @@ const TravelStories = () => {
           content: {
             display: "flex",
             justifyContent: "center",
+            alignItems: "center",
             backgroundColor: "#000000",
             zIndex: 1000
           }
