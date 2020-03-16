@@ -11,6 +11,7 @@ import unsplashedIcon from "./assets/camera48.png"
 import githubIcon from "./assets/github.png"
 import linkedinIcon from "./assets/linkedin48.png"
 import twitterIcon from "./assets/twitter48.png"
+import devto from "./assets/devto.png"
 import { Query } from "react-apollo"
 import { gql } from "apollo-boost"
 import { RingLoader } from "react-spinners"
@@ -237,7 +238,7 @@ function App() {
               <img src={linkedinIcon} alt="linkedin logo" />
             </Icon>
             <Icon href="https://dev.to/sebastiankurp">
-              <img src={linkedinIcon} alt="devTo logo" />
+              <img height="36" width="36" src={devto} alt="devTo logo" />
             </Icon>
           </IconContainer>
         </Menu>
