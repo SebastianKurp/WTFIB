@@ -73,6 +73,7 @@ const TravelStories = () => {
     height: 60px;
     width: 60px;
     border-radius: 50%;
+    object-fit: contain;
   `
 
   const ShowStoriesButton = styled.button`
