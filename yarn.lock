@@ -8603,6 +8603,11 @@ react-images@^0.5.16:
     react-scrolllock "^2.0.1"
     react-transition-group "2"
 
+react-insta-stories@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-insta-stories/-/react-insta-stories-2.0.1.tgz#d6cdb440e06052c2a71b5798db4660628bfecee8"
+  integrity sha512-Z4gEPTpI8VW668QoOYHHcTTB41yGmwiJKnnXHHcU1Rqf2Ox4pPJ2oOoC7sPuEMvnvU7y4hW9l+eYSK32t57I9Q==
+
 react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4:
   version "16.10.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.10.2.tgz#984120fd4d16800e9a738208ab1fba422d23b5ab"

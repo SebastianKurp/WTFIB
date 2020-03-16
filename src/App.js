@@ -21,6 +21,7 @@ import CityMarker from "./components/CityMarker"
 import LandMarkMarker from "./components/LandMarkMarker"
 import LastViewButton from "./components/LastViewButton"
 import "./App.css"
+import TravelStories from "./components/TravelStories"
 
 const mapboxKey =
   "pk.eyJ1Ijoic2ViYXN0aWFua3VycCIsImEiOiJjandwZWZ1emkxOHR1NDhwOG1lM2pmeHVmIn0.fHuAftP7b6uRy1UfWieSPQ"
@@ -99,7 +100,7 @@ function App() {
     flex-direction: column;
     flex-grow: 
     align-items: center;
-    min-height: 100vh;
+    min-height: calc(100vh - 16px);
     border-color: #8367c7;
     padding-top: 10px;
     border-style: solid;
@@ -114,6 +115,7 @@ function App() {
     width: 75%;
     height: auto;
   `
+
   const AboutMeParagraph = styled.p`
     padding-left: 5%;
     padding-right: 5%;
@@ -123,16 +125,19 @@ function App() {
     font-family: "Montserrat", sans-serif;
     color: #d6e5e3;
   `
+
   const Hey = styled.span`
     font-size: 30px;
     font-weight: 20px;
   `
+
   const Name = styled.span`
     padding-left: 2px;
     font-size: 24px;
     font-weight: 20px;
     color: #8367c7;
   `
+
   const DraftbitLink = styled.a`
     text-decoration: none;
     color: #5a45ff;
@@ -163,9 +168,6 @@ function App() {
     zoom: 1,
     pitch: 0
   })
-
-  //35.662,
-  //     longitude: 139.7038,
 
   const [visible, setVisible] = useState("")
 
@@ -299,6 +301,7 @@ function App() {
             />
           </ButtonContainer>
         )}
+        <TravelStories />
         <Query query={GET_MAPMARKERS_VISITED}>
           {({ loading, error, data }) => {
             if (loading)
