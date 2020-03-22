@@ -102,8 +102,9 @@ const TravelStories = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "#000000",
-            zIndex: 1000
+            backgroundColor: "#262626",
+            zIndex: 1000,
+            borderRadius: "20px"
           }
         }}>
         <>
