@@ -102,7 +102,7 @@ const TravelStories = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "#262626",
+            backgroundColor: "#111111",
             zIndex: 1000,
             borderRadius: "20px"
           }
@@ -128,7 +128,12 @@ const TravelStories = () => {
               }))
               return (
                 <>
-                  <Stories stories={storyData} defaultInterval={1500} width={432} height={650} />
+                  <Stories
+                    stories={storyData}
+                    defaultInterval={1500}
+                    width={"100%"}
+                    height={"100%"}
+                  />
                 </>
               )
             }}
