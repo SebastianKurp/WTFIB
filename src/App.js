@@ -296,16 +296,18 @@ function App() {
           </Query>
         </ReactModal>
         {visible !== "" ? null : (
-          <ButtonContainer>
-            <LastViewButton
-              zoom={viewport.zoom}
-              onClick={setViewport}
-              latitude={viewport.latitude}
-              longitude={viewport.longitude}
-            />
-          </ButtonContainer>
+          <>
+            <ButtonContainer>
+              <LastViewButton
+                zoom={viewport.zoom}
+                onClick={setViewport}
+                latitude={viewport.latitude}
+                longitude={viewport.longitude}
+              />
+            </ButtonContainer>
+            {viewport.zoom > 3 ? null : <TravelStories />}
+          </>
         )}
-        <TravelStories />
         <Query query={GET_MAPMARKERS_VISITED}>
           {({ loading, error, data }) => {
             if (loading)
