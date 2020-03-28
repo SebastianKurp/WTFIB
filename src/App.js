@@ -15,6 +15,7 @@ import devto from "./assets/devto.jpg"
 import { Query } from "react-apollo"
 import { gql } from "apollo-boost"
 import { RingLoader } from "react-spinners"
+import withSizes from "react-sizes"
 
 import HomeMarker from "./components/HomeMarker"
 import CountryMarker from "./components/CountryMarker"
@@ -63,7 +64,7 @@ const GET_LANDMARKS_PHOTOS = gql`
   }
 `
 
-function App() {
+const App = ({ isMobile }) => {
   const LoadingContainer = styled.div`
     display: flex;
     justify-content: center;
@@ -305,7 +306,7 @@ function App() {
                 longitude={viewport.longitude}
               />
             </ButtonContainer>
-            {viewport.zoom > 3 ? null : <TravelStories />}
+            {viewport.zoom > 3 && isMobile ? null : <TravelStories />}
           </>
         )}
         <Query query={GET_MAPMARKERS_VISITED}>
@@ -369,4 +370,8 @@ function App() {
   )
 }
 
-export default App
+const mapSizesToProps = ({ width }) => ({
+  isMobile: width < 480
+})
+
+export default withSizes(mapSizesToProps)(App)
