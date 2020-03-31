@@ -11,7 +11,7 @@ import unsplashedIcon from "./assets/camera48.png"
 import githubIcon from "./assets/github.png"
 import linkedinIcon from "./assets/linkedin48.png"
 import twitterIcon from "./assets/twitter48.png"
-import devto from "./assets/devto.jpg"
+import devto from "./assets/devtoTwo.png"
 import { Query } from "react-apollo"
 import { gql } from "apollo-boost"
 import { RingLoader } from "react-spinners"
@@ -306,6 +306,7 @@ const App = ({ isMobile }) => {
                 longitude={viewport.longitude}
               />
             </ButtonContainer>
+            {console.log(isMobile)}
             {viewport.zoom > 3 && isMobile ? null : <TravelStories />}
           </>
         )}
@@ -371,7 +372,7 @@ const App = ({ isMobile }) => {
 }
 
 const mapSizesToProps = ({ width }) => ({
-  isMobile: width < 480
+  isMobile: width <= 500
 })
 
 export default withSizes(mapSizesToProps)(App)
