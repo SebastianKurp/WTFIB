@@ -1,10 +1,11 @@
 import React from "react"
 import ReactDOM from "react-dom"
+import { Helmet } from "react-helmet"
+import { ApolloClient, InMemoryCache, HttpLink } from "apollo-boost"
+import { ApolloProvider } from "@apollo/react-hooks"
 import "./index.css"
 import App from "./App"
 import * as serviceWorker from "./serviceWorker"
-import { ApolloClient, InMemoryCache, HttpLink } from "apollo-boost"
-import { ApolloProvider } from "@apollo/react-hooks"
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -15,6 +16,10 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
+    <Helmet>
+      <meta charSet="utf-8" />
+      <title>Sebastian Kupriel-WTFIB </title>
+    </Helmet>
     <App />
   </ApolloProvider>,
   document.getElementById("root")

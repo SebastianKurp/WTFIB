@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import { Helmet } from "react-helmet"
 import ReactMapGL from "react-map-gl"
 import ReactModal from "react-modal"
 import Gallery from "react-grid-gallery"
@@ -187,10 +186,6 @@ const App = ({ isMobile }) => {
 
   return (
     <div className="App" id="outer-container">
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>Sebastian Kupriel-WTFIB </title>
-      </Helmet>
       {drawer ? null : (
         <DrawerButton onClick={() => showDrawer(!drawer)}>
           <img
