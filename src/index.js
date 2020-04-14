@@ -18,7 +18,7 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <Helmet>
       <meta charSet="utf-8" />
-      <title>Sebastian Kupriel-WTFIB </title>
+      <title>Sebastian Kupriel-WTFIB</title>
     </Helmet>
     <App />
   </ApolloProvider>,
