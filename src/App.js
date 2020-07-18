@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react"
+import { Query } from "react-apollo"
+import { scaleDown as MenuContainer } from "react-burger-menu"
 import ReactMapGL from "react-map-gl"
 import ReactModal from "react-modal"
-import Gallery from "react-grid-gallery"
-import { scaleDown as MenuContainer } from "react-burger-menu"
-import styled from "@emotion/styled"
 import Hexagon from "react-hexagon"
-import { avatar, unsplashedIcon, githubIcon, linkedinIcon, twitterIcon, devto } from "./images"
-import { Query } from "react-apollo"
-import { GET_MAPMARKERS_VISITED, GET_LANDMARKS_PHOTOS } from "./queries.js"
 import { RingLoader } from "react-spinners"
 import withSizes from "react-sizes"
+import Gallery from "react-grid-gallery"
+import styled from "@emotion/styled"
 
 import HomeMarker from "./components/HomeMarker"
 import CountryMarker from "./components/CountryMarker"
 import CityMarker from "./components/CityMarker"
 import LandMarkMarker from "./components/LandMarkMarker"
 import LastViewButton from "./components/LastViewButton"
-import "./App.css"
 import TravelStories from "./components/TravelStories"
+
+import { GET_MAPMARKERS_VISITED, GET_LANDMARKS_PHOTOS } from "./queries"
+import { avatar, unsplashedIcon, githubIcon, linkedinIcon, twitterIcon, devto } from "./assets/images"
 
 const mapboxKey = process.env.REACT_APP_MAPBOX_KEY;
 const unsplashAPI = process.env.REACT_APP_UNSPLASHAPI_KEY;
