@@ -12,7 +12,7 @@ import linkedinIcon from "./assets/linkedin48.png"
 import twitterIcon from "./assets/twitter48.png"
 import devto from "./assets/devtoTwo.png"
 import { Query } from "react-apollo"
-import { gql } from "apollo-boost"
+import { GET_MAPMARKERS_VISITED, GET_LANDMARKS_PHOTOS } from "./queries.js"
 import { RingLoader } from "react-spinners"
 import withSizes from "react-sizes"
 
@@ -26,42 +26,6 @@ import TravelStories from "./components/TravelStories"
 
 const mapboxKey = process.env.REACT_APP_MAPBOX_KEY;
 const unsplashAPI = process.env.REACT_APP_UNSPLASHAPI_KEY;
-
-const GET_MAPMARKERS_VISITED = gql`
-  query CountriesCitiesLandmarks {
-    countries {
-      id
-      country
-      latitude
-      longitude
-    }
-    cities {
-      id
-      city
-      latitude
-      longitude
-    }
-    landMarks {
-      id
-      landmark
-      latitude
-      longitude
-    }
-  }
-`
-
-const GET_LANDMARKS_PHOTOS = gql`
-  query landmarkImages($id: ID!) {
-    landMark(id: $id) {
-      id
-      photos {
-        id
-        filename
-        url
-      }
-    }
-  }
-`
 
 const App = ({ isMobile }) => {
   const LoadingContainer = styled.div`
