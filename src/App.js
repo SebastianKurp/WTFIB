@@ -24,8 +24,8 @@ import LastViewButton from "./components/LastViewButton"
 import "./App.css"
 import TravelStories from "./components/TravelStories"
 
-const mapboxKey =
-  "pk.eyJ1Ijoic2ViYXN0aWFua3VycCIsImEiOiJjandwZWZ1emkxOHR1NDhwOG1lM2pmeHVmIn0.fHuAftP7b6uRy1UfWieSPQ"
+const mapboxKey = process.env.REACT_APP_MAPBOX_KEY;
+const unsplashAPI = process.env.REACT_APP_UNSPLASHAPI_KEY;
 
 const GET_MAPMARKERS_VISITED = gql`
   query CountriesCitiesLandmarks {
@@ -170,6 +170,8 @@ const App = ({ isMobile }) => {
     pitch: 0
   })
 
+  const [numberOfViews, setNumberOfViews] = useState("")
+
   const [visible, setVisible] = useState("")
 
   const [aboutMeModalVisible, setAboutMeModalVisible] = useState(false)
@@ -177,11 +179,14 @@ const App = ({ isMobile }) => {
   const [drawer, showDrawer] = useState(true)
 
   useEffect(() => {
-    document.addEventListener("touchstart", function() {}, true)
+    document.addEventListener("touchstart", function () { }, true)
     // window.addEventListener(
     //   "resize",
     //   setViewport({ ...viewport, height: window.innerHeight, width: window.innerWidth })
     // )
+    fetch(`https://api.unsplash.com/users/sebbykurps/statistics/?client_id=${unsplashAPI}`)
+      .then(response => response.json())
+      .then(data => setNumberOfViews(`${data.views.total}`.replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')));
   })
 
   return (
@@ -207,7 +212,7 @@ const App = ({ isMobile }) => {
           />
           <AboutMeParagraph>
             <Hey>Hi, </Hey> <br />
-            I'm <Name>Sebastian Kurpiel</Name>. Unsplash featured photographer with a million views,
+            I'm <Name>Sebastian Kurpiel</Name>. Unsplash featured photographer with {numberOfViews} views,
             and a traveller waiting for an excuse to hop on a plane. People kept asking me "Where
             did you take that?" or "I want to go there!", so I decided to GeoTag my photos to make
             it easier for you to find the spots! <br />
@@ -301,7 +306,6 @@ const App = ({ isMobile }) => {
                 longitude={viewport.longitude}
               />
             </ButtonContainer>
-            {console.log(isMobile)}
             {viewport.zoom > 3 && isMobile ? null : <TravelStories />}
           </>
         )}
