@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Query } from "react-apollo"
-import { scaleDown as MenuContainer } from "react-burger-menu"
 import ReactMapGL from "react-map-gl"
 import ReactModal from "react-modal"
-import Hexagon from "react-hexagon"
 import { RingLoader } from "react-spinners"
 import withSizes from "react-sizes"
 import Gallery from "react-grid-gallery"
@@ -15,12 +13,11 @@ import CityMarker from "./components/CityMarker"
 import LandMarkMarker from "./components/LandMarkMarker"
 import LastViewButton from "./components/LastViewButton"
 import TravelStories from "./components/TravelStories"
+import AboutMeSideBar from "./components/AboutMeSideBar"
 
 import { GET_MAPMARKERS_VISITED, GET_LANDMARKS_PHOTOS } from "./queries"
-import { avatar, unsplashedIcon, githubIcon, linkedinIcon, twitterIcon, devto } from "./assets/images"
 
 const mapboxKey = process.env.REACT_APP_MAPBOX_KEY;
-const unsplashAPI = process.env.REACT_APP_UNSPLASHAPI_KEY;
 
 const App = ({ isMobile }) => {
   const LoadingContainer = styled.div`
@@ -55,71 +52,6 @@ const App = ({ isMobile }) => {
     outline: inherit;
   `
 
-  const Menu = styled.div`
-    display: flex !important ;
-    flex-direction: column;
-    flex-grow: 
-    align-items: center;
-    min-height: calc(100vh - 16px);
-    border-color: #8367c7;
-    padding-top: 10px;
-    border-style: solid;
-    border-left-width: 0px;
-    border-right-width: 5px;
-    background-color: #232C43;
-    overflow-y: hidden;
-  `
-
-  const HexagonImg = styled(Hexagon)`
-    align-self: center;
-    width: 75%;
-    height: auto;
-  `
-
-  const AboutMeParagraph = styled.p`
-    padding-left: 5%;
-    padding-right: 5%;
-    text-align: left;
-    font-size: 14px;
-    line-height: 24px;
-    font-family: "Montserrat", sans-serif;
-    color: #d6e5e3;
-  `
-
-  const Hey = styled.span`
-    font-size: 30px;
-    font-weight: 20px;
-  `
-
-  const Name = styled.span`
-    padding-left: 2px;
-    font-size: 24px;
-    font-weight: 20px;
-    color: #8367c7;
-  `
-
-  const DraftbitLink = styled.a`
-    text-decoration: none;
-    color: #5a45ff;
-    :hover:color: #5a45ff;
-    :active: color: #5a45ff;
-    :focus: color: #5a45ff;
-  `
-
-  const IconContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding-left: 5%;
-    padding-right: 5%;
-  `
-  const Icon = styled.a`
-    margin-left: 5px;
-    :hover {
-      opacity: 0.7;
-    }
-  `
-
   const [viewport, setViewport] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -129,7 +61,6 @@ const App = ({ isMobile }) => {
     pitch: 0
   })
 
-  const [numberOfViews, setNumberOfViews] = useState("")
 
   const [visible, setVisible] = useState("")
 
@@ -143,9 +74,6 @@ const App = ({ isMobile }) => {
     //   "resize",
     //   setViewport({ ...viewport, height: window.innerHeight, width: window.innerWidth })
     // )
-    fetch(`https://api.unsplash.com/users/sebbykurps/statistics/?client_id=${unsplashAPI}`)
-      .then(response => response.json())
-      .then(data => setNumberOfViews(`${data.views.total}`.replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')));
   })
 
   return (
@@ -158,51 +86,7 @@ const App = ({ isMobile }) => {
           />
         </DrawerButton>
       )}
-      <MenuContainer
-        isOpen={drawer}
-        pageWrapId={"page-wrap"}
-        outerContainerId={"outer-container"}
-        disableOverlayClick={() => showDrawer(false)}>
-        <Menu>
-          <HexagonImg
-            style={{ stroke: "#8367C7" }}
-            backgroundImage={avatar}
-            backgroundScale={1.1}
-          />
-          <AboutMeParagraph>
-            <Hey>Hi, </Hey> <br />
-            I'm <Name>Sebastian Kurpiel</Name>. Unsplash featured photographer with {numberOfViews} views,
-            and a traveller waiting for an excuse to hop on a plane. People kept asking me "Where
-            did you take that?" or "I want to go there!", so I decided to GeoTag my photos to make
-            it easier for you to find the spots! <br />
-            When I'm not traveling, you can find me working on
-            <DraftbitLink href="https://www.draftbit.com" target="_blank">
-              {" "}
-              draftbit{" "}
-            </DraftbitLink>
-            . A tool giving people the power to create apps mobile apps with zero code!
-            <br />
-            Feel free to check out my github or follow me on Twitter!
-          </AboutMeParagraph>
-          <IconContainer>
-            <Icon href="https://www.github.com/sebastianKurp" target="_blank">
-              <img src={githubIcon} alt="github logo" />
-            </Icon>
-            <Icon href="https://twitter.com/sebbykurps" target="_blank">
-              <img src={twitterIcon} alt="twitter logo" />
-            </Icon>
-            <Icon href="https://unsplash.com/sebbykurps" target="_blank">
-              <img src={unsplashedIcon} alt="unsplash logo" />
-            </Icon>
-            <Icon href="https://www.linkedin.com/in/sebastiankurpiel">
-              <img src={linkedinIcon} alt="linkedin logo" />
-            </Icon>
-            <Icon href="https://dev.to/sebastiankurp">
-              <img height="36" width="36" src={devto} alt="devTo logo" />
-            </Icon>
-          </IconContainer>
-        </Menu>
-      </MenuContainer>
+      <AboutMeSideBar openDrawer={drawer} setDrawerOpen={_ => showDrawer} />
       <main id="page-wrap">
         <ReactModal
           isOpen={aboutMeModalVisible}
