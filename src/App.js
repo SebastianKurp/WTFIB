@@ -86,7 +86,7 @@ const App = ({ isMobile }) => {
           />
         </DrawerButton>
       )}
-      <AboutMeSideBar openDrawer={drawer} setDrawerOpen={_ => showDrawer} />
+      <AboutMeSideBar openDrawer={drawer} setDrawerOpen={showDrawer} />
       <main id="page-wrap">
         <ReactModal
           isOpen={aboutMeModalVisible}

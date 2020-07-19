@@ -43,6 +43,7 @@ const TravelStories = () => {
   const [showStoryModal, toggleStoryModal] = useState(false)
   const [showStories, toggleStories] = useState(true)
   const [selectedStoryId, selectStoryId] = useState("recJnF96eVbg4JRMr")
+
   const StoryContainer = styled.div`
     display: flex;
     justify-content: space-around;
@@ -87,6 +88,13 @@ const TravelStories = () => {
     border-radius: 6px;
     border: 1px solid #dcdcdc;
     z-index: 1;
+  `
+
+  const Center = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height:100%;
   `
 
   return (
@@ -162,7 +170,9 @@ const TravelStories = () => {
             onClick={() => {
               toggleStories(false)
             }}>
-            <span>Hide Stories</span>
+            <Center>
+              <span>Hide Stories</span>
+            </Center>
           </StoriesOuterCircle>
         </StoryContainer>
       ) : showStoryModal ? null : (
