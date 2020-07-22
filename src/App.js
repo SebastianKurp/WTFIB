@@ -55,8 +55,8 @@ const App = ({ isMobile }) => {
   const [viewport, setViewport] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
-    latitude: 0, //swap to 0 in prod
-    longitude: 0, //swap to 0 in prod
+    latitude: 0,
+    longitude: 0,
     zoom: 1,
     pitch: 0
   })
@@ -70,10 +70,6 @@ const App = ({ isMobile }) => {
 
   useEffect(() => {
     document.addEventListener("touchstart", function () { }, true)
-    // window.addEventListener(
-    //   "resize",
-    //   setViewport({ ...viewport, height: window.innerHeight, width: window.innerWidth })
-    // )
   })
 
   return (
