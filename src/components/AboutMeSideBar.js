@@ -47,14 +47,6 @@ font-weight: 20px;
 color: #8367c7;
 `
 
-const DraftbitLink = styled.a`
-text-decoration: none;
-color: #5a45ff;
-:hover:color: #5a45ff;
-:active: color: #5a45ff;
-:focus: color: #5a45ff;
-`
-
 const IconContainer = styled.div`
 display: flex;
 flex-direction: row;
@@ -62,6 +54,7 @@ align-items: center;
 padding-left: 5%;
 padding-right: 5%;
 `
+
 const Icon = styled.a`
 margin-left: 5px;
 :hover {
@@ -96,15 +89,7 @@ const AboutMeSideBar = ({ openDrawer, setDrawerOpen }) => {
             I'm <Name>Sebastian Kurpiel</Name>. Unsplash featured photographer with {numberOfViews} views,
             and a traveller waiting for an excuse to hop on a plane. People kept asking me "Where
             did you take that?" or "I want to go there!", so I decided to GeoTag my photos to make
-            it easier for you to find the spots! <br />
-            When I'm not traveling, you can find me working on
-            <DraftbitLink href="https://www.draftbit.com" target="_blank">
-                        {" "}
-              draftbit{" "}
-                    </DraftbitLink>
-            . A tool giving people the power to create apps mobile apps with zero code!
-            <br />
-            Feel free to check out my github or follow me on Twitter!
+            it easier for you to find the spots! Feel free to check out my github or follow me on Twitter!
           </AboutMeParagraph>
                 <IconContainer>
                     <Icon href="https://www.github.com/sebastianKurp" target="_blank">
