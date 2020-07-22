@@ -2,12 +2,15 @@
 ## WTFIB(Where The F*cked I've Been)
 A smiple app to show where I have been and to geo-categorize my photos.
 
+Link to Live Site [Here](https://www.sebastiankurpiel.com/)
+
 ### Using:
 - React
 - Mapbox
 - Unsplashed API
 - GraphQL
 - EmotionJs For The Styling
+- Hosted and deployed using Netlify
 - Api can be found in another repo(it's super cool) 
 
 ### Opinion on styling using emotionJS/Css in Js
