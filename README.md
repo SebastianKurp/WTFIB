@@ -11,7 +11,7 @@ Link to Live Site [Here](https://www.sebastiankurpiel.com/)
 - GraphQL
 - EmotionJs For The Styling
 - Hosted and deployed using Netlify
-- Api can be found in another repo(it's super cool) 
+- Api can be found in this [repo](https://github.com/SebastianKurp/WTFIB-API)(psshhh it's super cool) 
 
 ### Opinion on styling using emotionJS/Css in Js
 Never used styled components before and overall the expierence was pretty good. 
