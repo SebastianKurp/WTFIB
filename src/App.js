@@ -80,7 +80,7 @@ const App = ({ isMobile }) => {
         setViewport({ height: window.innerHeight, width: window.innerWidth, ...viewport })
       )
     }
-  })
+  },[viewport])
 
   return (
     <div className="App" id="outer-container">
