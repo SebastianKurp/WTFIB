@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { Query } from "react-apollo"
 import ReactMapGL from "react-map-gl"
 import ReactModal from "react-modal"
@@ -17,7 +17,7 @@ import AboutMeSideBar from "./components/AboutMeSideBar"
 
 import { GET_MAPMARKERS_VISITED, GET_LANDMARKS_PHOTOS } from "./queries"
 
-const mapboxKey = process.env.REACT_APP_MAPBOX_KEY;
+const mapboxKey = process.env.REACT_APP_MAPBOX_KEY
 
 const App = ({ isMobile }) => {
   const LoadingContainer = styled.div`
@@ -61,26 +61,25 @@ const App = ({ isMobile }) => {
     pitch: 0
   })
 
-
   const [visible, setVisible] = useState("")
 
   const [aboutMeModalVisible, setAboutMeModalVisible] = useState(false)
 
   const [drawer, showDrawer] = useState(true)
 
-//   useEffect(() => {
-//     document.addEventListener("touchstart", function() {}, true)
-//     window.addEventListener(
-//       "resize",
-//       setViewport({ height: window.innerHeight, width: window.innerWidth, ...viewport })
-//     )
-//     return _ => {
-//       window.removeEventListener(
-//         "resize",
-//         setViewport({ height: window.innerHeight, width: window.innerWidth, ...viewport })
-//       )
-//     }
-//   },[viewport])
+  //   useEffect(() => {
+  //     document.addEventListener("touchstart", function() {}, true)
+  //     window.addEventListener(
+  //       "resize",
+  //       setViewport({ height: window.innerHeight, width: window.innerWidth, ...viewport })
+  //     )
+  //     return _ => {
+  //       window.removeEventListener(
+  //         "resize",
+  //         setViewport({ height: window.innerHeight, width: window.innerWidth, ...viewport })
+  //       )
+  //     }
+  //   },[viewport])
 
   return (
     <div className="App" id="outer-container">
