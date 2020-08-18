@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Query } from "react-apollo"
 import ReactMapGL from "react-map-gl"
 import ReactModal from "react-modal"
@@ -67,19 +67,20 @@ const App = ({ isMobile }) => {
 
   const [drawer, showDrawer] = useState(true)
 
-  //   useEffect(() => {
-  //     document.addEventListener("touchstart", function() {}, true)
-  //     window.addEventListener(
-  //       "resize",
-  //       setViewport({ height: window.innerHeight, width: window.innerWidth, ...viewport })
-  //     )
-  //     return _ => {
-  //       window.removeEventListener(
-  //         "resize",
-  //         setViewport({ height: window.innerHeight, width: window.innerWidth, ...viewport })
-  //       )
-  //     }
-  //   },[viewport])
+  useEffect(() => {
+    let timeoutId = null
+    const resizeListener = () => {
+      clearTimeout(timeoutId)
+      timeoutId = setTimeout(
+        () => setViewport({ height: window.innerHeight, width: window.innerWidth, ...viewport }),
+        150
+      )
+    }
+    window.addEventListener("resize", resizeListener)
+    return () => {
+      window.removeEventListener("resize", resizeListener)
+    }
+  }, [viewport])
 
   return (
     <div className="App" id="outer-container">
