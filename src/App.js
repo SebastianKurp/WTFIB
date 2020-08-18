@@ -68,19 +68,19 @@ const App = ({ isMobile }) => {
 
   const [drawer, showDrawer] = useState(true)
 
-  useEffect(() => {
-    document.addEventListener("touchstart", function() {}, true)
-    window.addEventListener(
-      "resize",
-      setViewport({ height: window.innerHeight, width: window.innerWidth, ...viewport })
-    )
-    return _ => {
-      window.removeEventListener(
-        "resize",
-        setViewport({ height: window.innerHeight, width: window.innerWidth, ...viewport })
-      )
-    }
-  },[viewport])
+//   useEffect(() => {
+//     document.addEventListener("touchstart", function() {}, true)
+//     window.addEventListener(
+//       "resize",
+//       setViewport({ height: window.innerHeight, width: window.innerWidth, ...viewport })
+//     )
+//     return _ => {
+//       window.removeEventListener(
+//         "resize",
+//         setViewport({ height: window.innerHeight, width: window.innerWidth, ...viewport })
+//       )
+//     }
+//   },[viewport])
 
   return (
     <div className="App" id="outer-container">
