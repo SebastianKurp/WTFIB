@@ -112,6 +112,7 @@ const App = ({ isMobile }) => {
           onRequestClose={() => setVisible("")}
           style={{
             overlay: {
+              zIndex: 101,
               backgroundColor: "rgba(0, 0, 0, 0.4)"
             },
             content: {
