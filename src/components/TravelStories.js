@@ -94,7 +94,7 @@ const TravelStories = () => {
     display: flex;
     align-items: center;
     justify-content: center;
-    height:100%;
+    height: 100%;
   `
 
   return (
@@ -106,6 +106,15 @@ const TravelStories = () => {
           toggleStories(true)
         }}
         style={{
+          overlay: {
+            zIndex: 110,
+            position: "fixed",
+            top: "0px",
+            left: "0px",
+            right: "0px",
+            bottom: "0px",
+            backgroundColor: "rgba(255, 255, 255, 0.75)"
+          },
           content: {
             display: "flex",
             justifyContent: "center",
