@@ -63,7 +63,7 @@ margin-left: 5px;
 `
 
 const AboutMeSideBar = ({ openDrawer, setDrawerOpen }) => {
-    const [numberOfViews, setNumberOfViews] = useState("6,019,661")
+    const [numberOfViews, setNumberOfViews] = useState("-,---,---")
 
     useEffect(() => {
         const unsplashAPI = process.env.REACT_APP_UNSPLASHAPI_KEY;
