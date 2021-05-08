@@ -75,7 +75,7 @@ const formatNumber = (number) => {
 }
 
 const AboutMeSideBar = ({ openDrawer, setDrawerOpen }) => {
-    const { countUp, start, update} = useCountUp({ start:1100000, end:1100000, startOnMount: false, duration: 2, formattingFn: formatNumber });
+    const { countUp, update} = useCountUp({ start:1100000, end:1100000, startOnMount: false, duration: 2, formattingFn: formatNumber });
     useEffect( () => {
         const unsplashAPI = process.env.REACT_APP_UNSPLASHAPI_KEY;
         const fetchNumberOfViews = async() => {
@@ -87,7 +87,7 @@ const AboutMeSideBar = ({ openDrawer, setDrawerOpen }) => {
             .catch(e => console.log(e))
         }
         fetchNumberOfViews();
-    }, [])
+    })
 
     return (
         <MenuContainer
