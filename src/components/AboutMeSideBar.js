@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { scaleDown as MenuContainer } from "react-burger-menu"
 import Hexagon from "react-hexagon"
 import styled from "@emotion/styled"
+import { useCountUp } from 'react-countup';
 import { avatar, unsplashedIcon, githubIcon, linkedinIcon, twitterIcon, devto } from "../assets/images"
 
 const Menu = styled.div`
@@ -62,15 +63,31 @@ margin-left: 5px;
 }
 `
 
-const AboutMeSideBar = ({ openDrawer, setDrawerOpen }) => {
-    const [numberOfViews, setNumberOfViews] = useState("7,000,000")
+const CountUpString = styled.span`
+font-size: 20px;
+font-weight: bold;
+width: 110px;
+float: left;
+`
 
-    useEffect(() => {
+const formatNumber = (number) => {
+    return number.toString().replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,');
+}
+
+const AboutMeSideBar = ({ openDrawer, setDrawerOpen }) => {
+    const { countUp, start, update} = useCountUp({ start:1100000, end:1100000, startOnMount: false, duration: 2, formattingFn: formatNumber });
+    useEffect( () => {
         const unsplashAPI = process.env.REACT_APP_UNSPLASHAPI_KEY;
-        fetch(`https://api.unsplash.com/users/sebbykurps/statistics/?client_id=${unsplashAPI}`)
+        const fetchNumberOfViews = async() => {
+            await fetch(`https://api.unsplash.com/users/sebbykurps/statistics/?client_id=${unsplashAPI}`)
             .then(response => response.json())
-            .then(data => setNumberOfViews(`${data.views.total}`.replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')));
-    })
+            .then(data => {
+                update(data.views.total)
+            })
+            .catch(e => console.log(e))
+        }
+        fetchNumberOfViews();
+    }, [])
 
     return (
         <MenuContainer
@@ -86,7 +103,7 @@ const AboutMeSideBar = ({ openDrawer, setDrawerOpen }) => {
                 />
                 <AboutMeParagraph>
                     <Hey>Hi, </Hey> <br />
-            I'm <Name>Sebastian Kurpiel</Name>. Unsplash featured photographer with {numberOfViews} views,
+            I'm <Name>Sebastian Kurpiel</Name>. Unsplash featured photographer with <CountUpString>{countUp}</CountUpString> views,
             and a traveller waiting for an excuse to hop on a plane. People kept asking me "Where
             did you take that?" or "I want to go there!", so I decided to GeoTag my photos to make
             it easier for you to find the spots! Feel free to check out my github or follow me on Twitter!
