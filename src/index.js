@@ -10,7 +10,7 @@ import * as serviceWorker from "./serviceWorker"
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
-    uri: "https://wtfib-api.fly.dev"
+    uri: process.env.REACT_APP_API_ENDPOINT
   })
 })
 
